@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +52,7 @@ public class UserService implements UserDetailsService {
         return userRepo.findAll();
     }
 
-    public boolean saveUser(User user) {
+    public boolean addUser(User user) {
         User userFromDB = userRepo.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
@@ -64,17 +65,23 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public boolean updateUser(User user) {
+        user.setUsername(user.getUsername());
+        user.setEmail(user.getEmail());
+        user.setFirst_name(user.getFirst_name());
+        user.setSecond_name(user.getSecond_name());
+        user.setLast_name(user.getLast_name());
+        user.setPhone(user.getPhone());
+        userRepo.save(user);
+        return true;
+    }
+
     public boolean deleteUser(Long userId) {
         if (userRepo.findById(userId).isPresent()) {
             userRepo.deleteById(userId);
             return true;
         }
         return false;
-    }
-
-    public List<User> usergtList(Long idMin) {
-        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
-                .setParameter("paramId", idMin).getResultList();
     }
 
     public boolean isAdminAdded () {

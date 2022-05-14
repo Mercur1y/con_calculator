@@ -13,8 +13,8 @@ import javax.validation.constraints.Size;
 public class User extends AbstractHuman implements UserDetails{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "id", initialValue = 2)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "id", initialValue = 1)
     private Long id;
 
     @Size(min=2, message = "Не меньше 5 знаков")
@@ -30,9 +30,8 @@ public class User extends AbstractHuman implements UserDetails{
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Customer> customers;
 
     public User() {
     }
@@ -96,61 +95,12 @@ public class User extends AbstractHuman implements UserDetails{
         this.roles = roles;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Set<Customer> getCustomers() {
+        return customers;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
     }
 
-    @Override
-    public String getLast_name() {
-        return super.getLast_name();
-    }
-
-    @Override
-    public void setLast_name(String last_name) {
-        super.setLast_name(last_name);
-    }
-
-    @Override
-    public String getFirst_name() {
-        return super.getFirst_name();
-    }
-
-    @Override
-    public void setFirst_name(String first_name) {
-        super.setFirst_name(first_name);
-    }
-
-    @Override
-    public String getSecond_name() {
-        return super.getSecond_name();
-    }
-
-    @Override
-    public void setSecond_name(String second_name) {
-        super.setSecond_name(second_name);
-    }
-
-    @Override
-    public String getEmail() {
-        return super.getEmail();
-    }
-
-    @Override
-    public void setEmail(String email) {
-        super.setEmail(email);
-    }
-
-    @Override
-    public int getPhone() {
-        return super.getPhone();
-    }
-
-    @Override
-    public void setPhone(int phone) {
-        super.setPhone(phone);
-    }
 }

@@ -1,17 +1,21 @@
 package com.simbirsoft.con_calc.entity;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @MappedSuperclass
 public abstract class AbstractHuman {
 
-    private String last_name;
-    private String first_name;
-    private String second_name;
-    private String email;
-    private Integer phone;
+    @NotBlank(message = "Поле имени не может быть пустым")
+    protected String last_name;
+    @NotBlank(message = "Поле фамилии не может быть пустым")
+    protected String first_name;
+    @NotBlank(message = "Поле отчества не может быть пустым")
+    protected String second_name;
+    @NotBlank(message = "Поле e-mail не может быть пустым")
+    protected String email;
+    @NotBlank(message = "Поле телефона не может быть пустым")
+    protected Long phone;
 
     public String getLast_name() {
         return last_name;
@@ -45,11 +49,11 @@ public abstract class AbstractHuman {
         this.email = email;
     }
 
-    public int getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 }

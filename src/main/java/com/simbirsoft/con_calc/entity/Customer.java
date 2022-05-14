@@ -13,18 +13,34 @@ public class Customer extends AbstractHuman {
 
     private String adress;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
-    private Set<User> users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Customer() {
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Customer(
+            String firstName,
+            String secondName,
+            String lastName,
+            String email,
+            Long phone,
+            String adress
+    ) {
+        this.first_name = firstName;
+        this.second_name = secondName;
+        this.last_name = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.adress = adress;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -41,55 +57,5 @@ public class Customer extends AbstractHuman {
 
     public void setAdress(String adress) {
         this.adress = adress;
-    }
-
-    @Override
-    public String getLast_name() {
-        return super.getLast_name();
-    }
-
-    @Override
-    public void setLast_name(String last_name) {
-        super.setLast_name(last_name);
-    }
-
-    @Override
-    public String getFirst_name() {
-        return super.getFirst_name();
-    }
-
-    @Override
-    public void setFirst_name(String first_name) {
-        super.setFirst_name(first_name);
-    }
-
-    @Override
-    public String getSecond_name() {
-        return super.getSecond_name();
-    }
-
-    @Override
-    public void setSecond_name(String second_name) {
-        super.setSecond_name(second_name);
-    }
-
-    @Override
-    public String getEmail() {
-        return super.getEmail();
-    }
-
-    @Override
-    public void setEmail(String email) {
-        super.setEmail(email);
-    }
-
-    @Override
-    public int getPhone() {
-        return super.getPhone();
-    }
-
-    @Override
-    public void setPhone(int phone) {
-        super.setPhone(phone);
     }
 }

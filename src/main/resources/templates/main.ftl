@@ -1,6 +1,6 @@
 <#import "macros/common.ftl" as c>
 <@c.page>
-    <div>
-        <h1>HI</h1>
-    </div>
+    <form action="customerList/${user.id}" method="get">
+        <button>Тык</button>
+    </form>
 </@c.page>

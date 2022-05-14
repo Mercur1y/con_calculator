@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     protected final Log logger = LogFactory.getLog(this.getClass());
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     public MyAuthenticationSuccessHandler() {
         super();
@@ -66,10 +66,6 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         throw new IllegalStateException();
     }
 
-    /**
-     * Removes temporary authentication-related data which may have been stored in the session
-     * during the authentication process.
-     */
     protected final void clearAuthenticationAttributes(final HttpServletRequest request) {
         final HttpSession session = request.getSession(false);
 
