@@ -65,7 +65,7 @@
                 <div class="p-2">
                     <input
                             id="phone"
-                            type="number" name="phone"
+                            type="text" name="phone"
                             class="form-control w-50"
                             placeholder="Телефон">
                 </div>

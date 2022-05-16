@@ -19,22 +19,6 @@ public class Customer extends AbstractHuman {
     public Customer() {
     }
 
-    public Customer(
-            String firstName,
-            String secondName,
-            String lastName,
-            String email,
-            Long phone,
-            String adress
-    ) {
-        this.first_name = firstName;
-        this.second_name = secondName;
-        this.last_name = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.adress = adress;
-    }
-
     public User getUser() {
         return user;
     }

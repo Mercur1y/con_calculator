@@ -1,12 +1,12 @@
 package com.simbirsoft.con_calc.entity;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "t_user")
@@ -14,19 +14,15 @@ public class User extends AbstractHuman implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "id", initialValue = 1)
+    @SequenceGenerator(name = "id", initialValue = 2)
     private Long id;
-
-    @Size(min=2, message = "Не меньше 5 знаков")
-    @NotBlank(message = "Поле логина не может быть пустым")
+    
+    @NotBlank
     private String username;
 
     @NotBlank(message = "Поле пароля не может быть пустым")
-    @Size(min=2, message = "Не меньше 5 знаков")
     private String password;
 
-    @Transient
-    private String passwordConfirm;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 

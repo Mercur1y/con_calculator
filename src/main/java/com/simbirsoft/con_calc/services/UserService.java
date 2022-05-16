@@ -4,6 +4,7 @@ import com.simbirsoft.con_calc.entity.Role;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.view.RoleRepo;
 import com.simbirsoft.con_calc.view.UserRepo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -59,21 +60,22 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        user.setRoles(Collections.singleton(new Role(2L, "USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         return true;
     }
 
-    public boolean updateUser(User user) {
-        user.setUsername(user.getUsername());
-        user.setEmail(user.getEmail());
-        user.setFirst_name(user.getFirst_name());
-        user.setSecond_name(user.getSecond_name());
-        user.setLast_name(user.getLast_name());
-        user.setPhone(user.getPhone());
-        userRepo.save(user);
-        return true;
+    public void updateUser(User user) {
+
+        User userFromDB = userRepo.findByUsername(user.getUsername());
+        userFromDB.setUsername(user.getUsername());
+        userFromDB.setEmail(user.getEmail());
+        userFromDB.setFirst_name(user.getFirst_name());
+        userFromDB.setSecond_name(user.getSecond_name());
+        userFromDB.setLast_name(user.getLast_name());
+        userFromDB.setPhone(user.getPhone());
+        userRepo.save(userFromDB);
     }
 
     public boolean deleteUser(Long userId) {
@@ -88,35 +90,5 @@ public class UserService implements UserDetailsService {
         User userFromDb = userRepo.findByUsername("admin");
 
         return userFromDb != null;
-    }
-
-    @Transactional
-    public void initDB () {
-        if(addOnce){
-            Query query = em.createNativeQuery(
-                    "insert into t_role(id, name)" + "values(?,?)");
-            query.setParameter(1, 1L);
-            query.setParameter(2, "ROLE_USER");
-            query.executeUpdate();
-
-            Query query1 = em.createNativeQuery(
-                    "insert into t_role(id, name)" + "values(?,?)");
-            query1.setParameter(1, 2L);
-            query1.setParameter(2, "ROLE_ADMIN");
-            query1.executeUpdate();
-
-            Query query2 = em.createNativeQuery(
-                    "insert into t_user (id, password, username)" + "values(?,?,?)");
-            query2.setParameter(1, 1L);
-            query2.setParameter(2, passwordEncoder.encode("admin"));
-            query2.setParameter(3, "admin");
-            query2.executeUpdate();
-
-            Query query3 = em.createNativeQuery("insert into t_user_roles (user_id, roles_id)" + "values(?,?)");
-            query3.setParameter(1, 1L);
-            query3.setParameter(2, 2L);
-            query3.executeUpdate();
-            addOnce = false;
-        }
     }
 }

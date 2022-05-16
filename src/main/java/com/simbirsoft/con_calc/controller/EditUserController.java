@@ -4,11 +4,13 @@ import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Set;
 
 @Controller
@@ -26,10 +28,12 @@ public class EditUserController {
         return "editUser";
     }
 
-    @PostMapping("/editUser/{user}")
+    @PostMapping("/editUser/{id}")
     public String updateProfile(
-            @PathVariable User user,
+            @PathVariable("id") long id,
+            @Valid User user,
             Model model) {
+        model.addAttribute("user", user);
         userService.updateUser(user);
         return "redirect:/admin";
     }

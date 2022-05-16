@@ -1,12 +1,12 @@
 <#import "macros/common.ftl" as c>
 
 <@c.page>
-    <form action="/editUser/${user.id}" method="post">
+    <div class="form-group">
         <div class="col-sm-6">
             <div class="p-2">
                 <input type="text" name="username"
                        class="form-control w-50 ${(usernameError??)?string('is-invalid', '')}"
-                       placeholder="some@some.com" value="${user.username}"/>
+                       placeholder="Логин" value="${user.username}"/>
                 <#if usernameError??>
                     <div class="invalid-feedback">
                         ${usernameError}
@@ -58,10 +58,11 @@
         </div>
         <div class="col-sm-6">
             <div class="p-2">
+                <form action="/editUser/${user.id}" method="post">
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                <input type="hidden" name="id" value="${user.id}" />
                 <button class="btn btn-primary" type="submit">Сохранить</button>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
 </@c.page>

@@ -2,20 +2,21 @@ package com.simbirsoft.con_calc.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @MappedSuperclass
 public abstract class AbstractHuman {
 
     @NotBlank(message = "Поле имени не может быть пустым")
-    protected String last_name;
+    private String last_name;
     @NotBlank(message = "Поле фамилии не может быть пустым")
-    protected String first_name;
+    private String first_name;
     @NotBlank(message = "Поле отчества не может быть пустым")
-    protected String second_name;
+    private String second_name;
     @NotBlank(message = "Поле e-mail не может быть пустым")
-    protected String email;
-    @NotBlank(message = "Поле телефона не может быть пустым")
-    protected Long phone;
+    private String email;
+    @NotEmpty(message = "Поле телефона не может быть пустым")
+    private Long phone;
 
     public String getLast_name() {
         return last_name;
