@@ -1,6 +1,7 @@
 package com.simbirsoft.con_calc.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_material")
@@ -18,11 +19,11 @@ public class Material {
     public Material() {
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private WallCladding wallCladding;
+    @Transient
+    @ManyToMany(mappedBy = "materials")
+    private Set<WallCladding> wallCladdingSet;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private MaterialType type;
 
     public MaterialType getType() {

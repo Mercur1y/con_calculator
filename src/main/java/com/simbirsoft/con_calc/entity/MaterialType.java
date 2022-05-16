@@ -1,9 +1,10 @@
 package com.simbirsoft.con_calc.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "t_materialType")
+@Table(name = "t_material_type")
 public class MaterialType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,19 +14,10 @@ public class MaterialType {
     public MaterialType() {
     }
 
-    @OneToOne(mappedBy = "type")
-    private Material material;
+    @OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Material> materials;
 
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "unit_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private MaterialUnit unit;
 
     public MaterialUnit getUnit() {

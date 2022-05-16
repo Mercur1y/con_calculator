@@ -1,9 +1,10 @@
 package com.simbirsoft.con_calc.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "t_materialUnit")
+@Table(name = "t_material_unit")
 public class MaterialUnit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,16 +14,8 @@ public class MaterialUnit {
     public MaterialUnit() {
     }
 
-    @OneToOne(mappedBy = "unit")
-    private MaterialType type;
-
-    public MaterialType getType() {
-        return type;
-    }
-
-    public void setType(MaterialType type) {
-        this.type = type;
-    }
+    @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<MaterialType> materialTypeSet;
 
     public Long getId() {
         return id;

@@ -52,6 +52,11 @@ public class UtilsController {
             user.setUsername("admin");
             user.setPassword(passwordEncoder.encode("admin"));
             user.setRoles(Collections.singleton(new Role(1L, "ADMIN")));
+            user.setLast_name("Фамилия");
+            user.setFirst_name("Имя");
+            user.setSecond_name("Отчество");
+            user.setEmail("some@some.ru");
+            user.setPhone("899992229");
             em.merge(user);
 
             MaterialUnit materialUnit = new MaterialUnit();

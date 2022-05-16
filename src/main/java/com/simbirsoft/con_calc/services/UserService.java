@@ -4,34 +4,26 @@ import com.simbirsoft.con_calc.entity.Role;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.view.RoleRepo;
 import com.simbirsoft.con_calc.view.UserRepo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager em;
-    private boolean addOnce = true;
+
     @Autowired
-    UserRepo userRepo;
+    private UserRepo userRepo;
     @Autowired
-    RoleRepo roleRepo;
+    private RoleRepo roleRepo;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,9 +58,8 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void updateUser(User user) {
-
-        User userFromDB = userRepo.findByUsername(user.getUsername());
+    public void updateUser(User user, Long id) {
+        User userFromDB = userRepo.getById(id);
         userFromDB.setUsername(user.getUsername());
         userFromDB.setEmail(user.getEmail());
         userFromDB.setFirst_name(user.getFirst_name());

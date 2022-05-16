@@ -7,34 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
 @Controller
+@RequestMapping("/customerList")
 public class ListOfCustomersController {
 
     @Autowired
     CustomerRepo customerRepo;
 
-    @GetMapping("/customerList/{user}")
+    @GetMapping("{user}")
     public String main(
             @PathVariable User user,
-            @AuthenticationPrincipal User currentUser,
             Model model
     ) {
         Set<Customer> customersSet = user.getCustomers();
-//        System.out.println(customersSet);
-//        System.out.println(currentUser.getId());
         model.addAttribute("customers", customersSet);
-        model.addAttribute("user", currentUser);
+        model.addAttribute("user", user);
         return "customerList";
     }
 
-    @PostMapping("/customerList/{user}")
+    @PostMapping("{user}")
     public String  deleteUser(
             @PathVariable User user,
             @RequestParam(required = true, defaultValue = "" ) Long customerId,

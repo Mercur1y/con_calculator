@@ -10,23 +10,25 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.Calendar;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/addCustomer")
 public class AddCustomerController {
 
     @Autowired
     CustomerRepo customerRepo;
 
-    @GetMapping("/addCustomer")
+    @GetMapping
     public String inputPage() {
         return "newCustomer";
     }
 
-    @PostMapping("/addCustomer")
+    @PostMapping
     public String add(
             @AuthenticationPrincipal User user,
             @Valid Customer customer,
@@ -36,6 +38,7 @@ public class AddCustomerController {
         customer.setUser(user);
         model.addAttribute("customer", customer);
         model.addAttribute("user", user);
+
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);

@@ -1,12 +1,14 @@
 <#import "macros/common.ftl" as c>
+<#--    <#include "macros/security.ftl"/>-->
 
 <@c.page>
+    <form action="/editUser/${user.id}" method="post">
     <div class="form-group">
         <div class="col-sm-6">
             <div class="p-2">
                 <input type="text" name="username"
                        class="form-control w-50 ${(usernameError??)?string('is-invalid', '')}"
-                       placeholder="Логин" value="${user.username}"/>
+                       placeholder="Логин" value="${user.getUsername()}"/>
                 <#if usernameError??>
                     <div class="invalid-feedback">
                         ${usernameError}
@@ -18,7 +20,7 @@
             <div class="p-2">
                 <input type="email" name="email"
                        class="form-control w-50 ${(emailError??)?string('is-invalid', '')}"
-                       placeholder="some@some.com" value="${user.email}"/>
+                       placeholder="some@some.com" value="${user.getEmail()}"/>
                 <#if emailError??>
                     <div class="invalid-feedback">
                         ${emailError}
@@ -58,11 +60,10 @@
         </div>
         <div class="col-sm-6">
             <div class="p-2">
-                <form action="/editUser/${user.id}" method="post">
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <button class="btn btn-primary" type="submit">Сохранить</button>
-                </form>
             </div>
         </div>
     </div>
+    </form>
 </@c.page>

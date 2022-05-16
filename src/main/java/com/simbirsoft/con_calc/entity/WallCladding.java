@@ -19,7 +19,7 @@ public class WallCladding {
     @Enumerated(EnumType.STRING)
     private WallCladdingTypeEnum type;
 
-    @OneToMany(mappedBy = "wallCladding", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Material> materials;
 
     @ManyToOne(fetch = FetchType.LAZY)
