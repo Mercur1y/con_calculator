@@ -16,6 +16,9 @@ public class Customer extends AbstractHuman {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Frame> frames;
+
     public Customer() {
     }
 
@@ -41,5 +44,13 @@ public class Customer extends AbstractHuman {
 
     public void setAdress(String adress) {
         this.adress = adress;
+    }
+
+    public Set<Frame> getFrames() {
+        return frames;
+    }
+
+    public void setFrames(Set<Frame> frames) {
+        this.frames = frames;
     }
 }

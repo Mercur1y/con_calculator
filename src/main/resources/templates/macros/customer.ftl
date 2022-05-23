@@ -3,7 +3,7 @@
     <#macro customer isEditPage>
         <div class="col-sm-6">
             <div class="p-2">
-                <input type="text" name="last_name" <#if isEditPage>value="${customer\.last_name}"</#if>
+                <input type="text" name="last_name" <#if isEditPage>value="${customer.last_name}"</#if>
                        class="form-control w-50"
                        placeholder="Фамилия"/>
             </div>

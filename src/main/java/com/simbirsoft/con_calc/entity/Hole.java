@@ -3,6 +3,7 @@ package com.simbirsoft.con_calc.entity;
 import com.simbirsoft.con_calc.entity.enums.HoleTypeEnum;
 
 import javax.persistence.*;
+import java.util.stream.DoubleStream;
 
 @Entity
 @Table(name = "t_hole")
@@ -70,4 +71,10 @@ public class Hole {
     public void setFloor(Floor floor) {
         this.floor = floor;
     }
+
+    public Double getCountPerimeter() {
+        return (this.width + this.height) * 2 * this.count;
+    }
+
+    public Double getCountSquare() {return  this.width * this.height * this.count;}
 }

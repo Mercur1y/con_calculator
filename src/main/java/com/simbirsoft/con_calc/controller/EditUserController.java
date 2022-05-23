@@ -47,7 +47,6 @@ public class EditUserController {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = UtilsController.getErrors(bindingResult);
             model.mergeAttributes(errors);
-            System.out.println(errors);
             return "editUser";
         }
         userService.updateUser(user, id);

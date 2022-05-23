@@ -14,8 +14,6 @@ public class WallCladding {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double width;
-
     @Enumerated(EnumType.STRING)
     private WallCladdingTypeEnum type;
 
@@ -34,14 +32,6 @@ public class WallCladding {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getWidth() {
-        return width;
-    }
-
-    public void setWidth(Double width) {
-        this.width = width;
     }
 
     public WallCladdingTypeEnum getType() {

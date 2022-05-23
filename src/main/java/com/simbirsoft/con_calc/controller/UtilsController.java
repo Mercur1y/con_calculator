@@ -370,6 +370,46 @@ public class UtilsController {
             material.setPrice((double) 53);
             em.merge(material);
 
+            material = new Material();
+            material.setId(29L);
+            material.setName("Доска 30*100*3000");
+            material.setType(materialType);
+            material.setLength((short) 3000);
+            material.setWidth((short) 100);
+            material.setHeight((short) 50);
+            material.setPrice((double) 7800);
+            em.merge(material);
+
+            material = new Material();
+            material.setId(30L);
+            material.setName("Брус 50*50*3000");
+            material.setType(materialType);
+            material.setLength((short) 3000);
+            material.setWidth((short) 50);
+            material.setHeight((short) 50);
+            material.setPrice((double) 9100);
+            em.merge(material);
+
+            material = new Material();
+            material.setId(31L);
+            material.setName("Бетонные сваи 150*150*3000");
+            material.setType(materialType6);
+            material.setLength((short) 3000);
+            material.setWidth((short) 150);
+            material.setHeight((short) 150);
+            material.setPrice((double) 1500);
+            em.merge(material);
+
+            material = new Material();
+            material.setId(32L);
+            material.setName("Бетонные сваи 200*200*3000");
+            material.setType(materialType6);
+            material.setLength((short) 3000);
+            material.setWidth((short) 200);
+            material.setHeight((short) 200);
+            material.setPrice((double) 1900);
+            em.merge(material);
+
         }
     }
 }
