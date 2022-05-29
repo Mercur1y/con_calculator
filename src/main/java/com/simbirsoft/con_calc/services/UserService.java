@@ -2,7 +2,6 @@ package com.simbirsoft.con_calc.services;
 
 import com.simbirsoft.con_calc.entity.Role;
 import com.simbirsoft.con_calc.entity.User;
-import com.simbirsoft.con_calc.view.RoleRepo;
 import com.simbirsoft.con_calc.view.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -64,6 +63,7 @@ public class UserService implements UserDetailsService {
         userFromDB.setSecond_name(user.getSecond_name());
         userFromDB.setLast_name(user.getLast_name());
         userFromDB.setPhone(user.getPhone());
+        userFromDB.setStatus(user.getStatus());
         userRepo.save(userFromDB);
     }
 

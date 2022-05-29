@@ -12,9 +12,9 @@ public class Material {
     private Long id;
     private String name;
     private Double price;
-    private Short length;
-    private Short width;
-    private Short height;
+    private Integer length;
+    private Integer width;
+    private Integer height;
 
     public Material() {
     }
@@ -58,27 +58,35 @@ public class Material {
         this.price = price;
     }
 
-    public Short getLength() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(Short length) {
+    public void setLength(Integer length) {
         this.length = length;
     }
 
-    public Short getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(Short width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public Short getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(Short height) {
+    public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public Set<WallCladding> getWallCladdingSet() {
+        return wallCladdingSet;
+    }
+
+    public void setWallCladdingSet(Set<WallCladding> wallCladdingSet) {
+        this.wallCladdingSet = wallCladdingSet;
     }
 }

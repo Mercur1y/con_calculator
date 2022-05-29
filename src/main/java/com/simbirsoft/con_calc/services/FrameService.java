@@ -1,8 +1,6 @@
 package com.simbirsoft.con_calc.services;
 
-import com.simbirsoft.con_calc.entity.Floor;
 import com.simbirsoft.con_calc.entity.Frame;
-import com.simbirsoft.con_calc.view.FloorRepo;
 import com.simbirsoft.con_calc.view.FrameRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,16 +1,16 @@
 <#import "macros/common.ftl" as c>
 <#include "macros/security.ftl">
 <@c.page>
-    <h3>List of users</h3>
+    <h3>Список пользователей</h3>
     <form action="/newuser" method="get">
-        <button class = "btn btn-primary">Add</button>
+        <button class = "btn btn-primary">Добавить</button>
     </form>
 
     <table cellpadding="7">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Role</th>
+            <th>Логин</th>
+            <th>Роль</th>
             <th></th>
         </tr>
         </thead>

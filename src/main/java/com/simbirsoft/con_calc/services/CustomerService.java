@@ -1,7 +1,6 @@
 package com.simbirsoft.con_calc.services;
 
 import com.simbirsoft.con_calc.entity.Customer;
-import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.view.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

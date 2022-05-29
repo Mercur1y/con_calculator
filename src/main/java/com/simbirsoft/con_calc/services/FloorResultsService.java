@@ -24,29 +24,22 @@ public class FloorResultsService {
     @Autowired
     CalculationService calculationService;
 
+    @Autowired
+    MaterialService materialService;
+
     public FloorResults findFloorResultsById(Long id) {
         Optional<FloorResults> resultsFromDb = floorResultsRepo.findById(id);
         return resultsFromDb.orElse(new FloorResults());
     }
 
-    private String getNameByTypeId (Set <Material> materials, Long id) {
-       return  materials.stream()
-               .filter(material -> material.getType().getId().equals(id))
-               .map(Material::getName)
-               .findFirst()
-               .orElse(null);
-    }
-
-    private double getPriceByTypeId (Set <Material> materials, Long id) {
-        return  materials.stream()
-                .filter(material -> material.getType().getId().equals(id))
-                .map(Material::getPrice)
-                .findFirst()
-                .orElse(null);
-    }
-
     public void addUpdateResults (Floor floor) {
-        FloorResults floorResults = new FloorResults();
+
+        FloorResults floorResults;
+
+        if(floor.getFloorResults() == null) floorResults = new FloorResults();
+        else {
+            floorResults = floorResultsRepo.getById(floor.getFloorResults().getId());
+        }
 
         Set<Material> outMaterials = wallCladdingRepo.findByFloorAndType(floor, WallCladdingTypeEnum.OUT).getMaterials();
         Set<Material> inMaterials = wallCladdingRepo.findByFloorAndType(floor, WallCladdingTypeEnum.IN).getMaterials();
@@ -56,68 +49,68 @@ public class FloorResultsService {
         //Для внешних
 
         double volumeOfOutWood = calculationService.getWallVolumeOfWood(floor, "out");
-        floorResults.setNameOfOutWood(getNameByTypeId(outMaterials, 1L));
+        floorResults.setNameOfOutWood(materialService.getNameByTypeId(outMaterials, 1L));
         floorResults.setVolumeOfOutWood(volumeOfOutWood);
-        floorResults.setPriceOfOutWood(calculationService.round(volumeOfOutWood * getPriceByTypeId(outMaterials, 1L)));
+        floorResults.setPriceOfOutWood(calculationService.round(volumeOfOutWood * materialService.getPriceByTypeId(outMaterials, 1L)));
 
         double squareOfOutOsb = calculationService.getWallOsbSquare(floor, "out");
-        floorResults.setNameOfOutOsb(getNameByTypeId(outMaterials, 2L));
+        floorResults.setNameOfOutOsb(materialService.getNameByTypeId(outMaterials, 2L));
         floorResults.setSquareOfOutOsb(squareOfOutOsb);
-        floorResults.setPriceOfOutOsb(calculationService.round(squareOfOutOsb * getPriceByTypeId(outMaterials, 2L)));
+        floorResults.setPriceOfOutOsb(calculationService.round(squareOfOutOsb * materialService.getPriceByTypeId(outMaterials, 2L)));
 
         double volumeOfOutWarm = calculationService.getOutVolumeOfWarm(floor);
-        floorResults.setNameOfOutWarm(getNameByTypeId(outMaterials, 3L));
+        floorResults.setNameOfOutWarm(materialService.getNameByTypeId(outMaterials, 3L));
         floorResults.setVolumeOfOutWarm(volumeOfOutWarm);
-        floorResults.setPriceOfOutWarm(calculationService.round(volumeOfOutWarm * getPriceByTypeId(outMaterials, 3L)));
+        floorResults.setPriceOfOutWarm(calculationService.round(volumeOfOutWarm * materialService.getPriceByTypeId(outMaterials, 3L)));
 
         double squareOfOutWaterAndWind = calculationService.getOutWindAndWaterSquare(floor);
-        floorResults.setNameOfOutWater(getNameByTypeId(outMaterials, 4L));
+        floorResults.setNameOfOutWater(materialService.getNameByTypeId(outMaterials, 4L));
         floorResults.setSquareOfOutWater(squareOfOutWaterAndWind);
-        floorResults.setPriceOfOutWater(calculationService.round(squareOfOutWaterAndWind * getPriceByTypeId(outMaterials, 4L)));
+        floorResults.setPriceOfOutWater(calculationService.round(squareOfOutWaterAndWind * materialService.getPriceByTypeId(outMaterials, 4L)));
 
-        floorResults.setNameOfOutWind(getNameByTypeId(outMaterials, 5L));
+        floorResults.setNameOfOutWind(materialService.getNameByTypeId(outMaterials, 5L));
         floorResults.setSquareOfOutWind(squareOfOutWaterAndWind);
-        floorResults.setPriceOfOutWind(calculationService.round(squareOfOutWaterAndWind * getPriceByTypeId(outMaterials, 5L)));
+        floorResults.setPriceOfOutWind(calculationService.round(squareOfOutWaterAndWind * materialService.getPriceByTypeId(outMaterials, 5L)));
 
         //-----------------------------------------------
         //Для внутренних
 
         double volumeOfInWood = calculationService.getWallVolumeOfWood(floor, "in");
-        floorResults.setNameOfInWood(getNameByTypeId(inMaterials, 1L));
+        floorResults.setNameOfInWood(materialService.getNameByTypeId(inMaterials, 1L));
         floorResults.setVolumeOfInWood(volumeOfInWood);
-        floorResults.setPriceOfInWood(calculationService.round(volumeOfInWood * getPriceByTypeId(inMaterials, 1L)));
+        floorResults.setPriceOfInWood(calculationService.round(volumeOfInWood * materialService.getPriceByTypeId(inMaterials, 1L)));
 
         double squareOfInOsb = calculationService.getWallOsbSquare(floor, "in");
-        floorResults.setNameOfInOsb(getNameByTypeId(inMaterials, 2L));
+        floorResults.setNameOfInOsb(materialService.getNameByTypeId(inMaterials, 2L));
         floorResults.setSquareOfInOsb(squareOfInOsb);
-        floorResults.setPriceOfInOsb(squareOfInOsb * getPriceByTypeId(inMaterials, 2L));
+        floorResults.setPriceOfInOsb(squareOfInOsb * materialService.getPriceByTypeId(inMaterials, 2L));
 
         //-----------------------------------------------
         //Для перекрытий
 
         double volumeOfOverWood = calculationService.getOverVolumeOfWood(floor);
-        floorResults.setNameOfOverWood(getNameByTypeId(overMaterials, 1L));
+        floorResults.setNameOfOverWood(materialService.getNameByTypeId(overMaterials, 1L));
         floorResults.setVolumeOfOverWood(volumeOfOverWood);
-        floorResults.setPriceOfOverWood(calculationService.round(volumeOfOverWood * getPriceByTypeId(overMaterials, 1L)));
+        floorResults.setPriceOfOverWood(calculationService.round(volumeOfOverWood * materialService.getPriceByTypeId(overMaterials, 1L)));
 
         double squareOfOverOsb = calculationService.getOverOsbSquare(floor);
-        floorResults.setNameOfOverOsb(getNameByTypeId(overMaterials, 2L));
+        floorResults.setNameOfOverOsb(materialService.getNameByTypeId(overMaterials, 2L));
         floorResults.setSquareOfOverOsb(squareOfOverOsb);
-        floorResults.setPriceOfOverOsb(calculationService.round(squareOfOverOsb * getPriceByTypeId(overMaterials, 2L)));
+        floorResults.setPriceOfOverOsb(calculationService.round(squareOfOverOsb * materialService.getPriceByTypeId(overMaterials, 2L)));
 
         double volumeOfOverWarm = calculationService.getOverVolumeOfWarm(floor);
-        floorResults.setNameOfOverWarm(getNameByTypeId(overMaterials, 3L));
+        floorResults.setNameOfOverWarm(materialService.getNameByTypeId(overMaterials, 3L));
         floorResults.setVolumeOfOverWarm(volumeOfOverWarm);
-        floorResults.setPriceOfOverWarm(calculationService.round(volumeOfOverWarm * getPriceByTypeId(overMaterials, 3L)));
+        floorResults.setPriceOfOverWarm(calculationService.round(volumeOfOverWarm * materialService.getPriceByTypeId(overMaterials, 3L)));
 
         double squareOfOverWaterAndWind = calculationService.getOverWindAndWaterSquare(floor);
-        floorResults.setNameOfOverWater(getNameByTypeId(overMaterials, 4L));
+        floorResults.setNameOfOverWater(materialService.getNameByTypeId(overMaterials, 4L));
         floorResults.setSquareOfOverWater(squareOfOverWaterAndWind);
-        floorResults.setPriceOfOverWater(calculationService.round(squareOfOverWaterAndWind * getPriceByTypeId(overMaterials, 4L)));
+        floorResults.setPriceOfOverWater(calculationService.round(squareOfOverWaterAndWind * materialService.getPriceByTypeId(overMaterials, 4L)));
 
-        floorResults.setNameOfOverWind(getNameByTypeId(overMaterials, 5L));
+        floorResults.setNameOfOverWind(materialService.getNameByTypeId(overMaterials, 5L));
         floorResults.setSquareOfOverWind(squareOfOverWaterAndWind);
-        floorResults.setPriceOfOverWind(calculationService.round(squareOfOverWaterAndWind * getPriceByTypeId(overMaterials, 5L)));
+        floorResults.setPriceOfOverWind(calculationService.round(squareOfOverWaterAndWind * materialService.getPriceByTypeId(overMaterials, 5L)));
 
         floorResults.setTotalOutPrice(
                         floorResults.getPriceOfOutWood()

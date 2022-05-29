@@ -23,6 +23,9 @@ public class WallCladding {
     @ManyToOne(fetch = FetchType.LAZY)
     private Floor floor;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Foundation foundation;
+
     public WallCladding() {
     }
 
@@ -56,5 +59,13 @@ public class WallCladding {
 
     public void setFloor(Floor floor) {
         this.floor = floor;
+    }
+
+    public Foundation getFoundation() {
+        return foundation;
+    }
+
+    public void setFoundation(Foundation foundation) {
+        this.foundation = foundation;
     }
 }

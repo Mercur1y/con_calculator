@@ -1,8 +1,5 @@
 package com.simbirsoft.con_calc.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,11 +9,12 @@ public class Floor extends AbstractElement{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer number;
     private Double height;
     private Double square;
-    private Short overWidth;
-    private Short outWallWidth;
-    private Short inWallWidth;
+    private Integer overWidth;
+    private Integer outWallWidth;
+    private Integer inWallWidth;
     private Boolean isFirst;
 
     @OneToMany(mappedBy = "floor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -25,12 +23,15 @@ public class Floor extends AbstractElement{
     @OneToMany(mappedBy = "floor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Hole> holes;
 
-    @OneToOne(mappedBy = "floor")
+    @OneToOne(mappedBy = "floor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private FloorResults floorResults;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "frame_id", referencedColumnName = "id")
     private Frame frame;
+
+    public Floor() {
+    }
 
     public Long getId() {
         return id;
@@ -38,6 +39,14 @@ public class Floor extends AbstractElement{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public Double getHeight() {
@@ -48,28 +57,36 @@ public class Floor extends AbstractElement{
         this.height = height;
     }
 
+    public Integer getOverWidth() {
+        return overWidth;
+    }
+
+    public void setOverWidth(Integer overWidth) {
+        this.overWidth = overWidth;
+    }
+
+    public Integer getOutWallWidth() {
+        return outWallWidth;
+    }
+
+    public void setOutWallWidth(Integer outWallWidth) {
+        this.outWallWidth = outWallWidth;
+    }
+
+    public Integer getInWallWidth() {
+        return inWallWidth;
+    }
+
+    public void setInWallWidth(Integer inWallWidth) {
+        this.inWallWidth = inWallWidth;
+    }
+
     public Double getSquare() {
         return square;
     }
 
     public void setSquare(Double square) {
         this.square = square;
-    }
-
-    public Short getOutWallWidth() {
-        return outWallWidth;
-    }
-
-    public void setOutWallWidth(Short outWallWidth) {
-        this.outWallWidth = outWallWidth;
-    }
-
-    public Short getInWallWidth() {
-        return inWallWidth;
-    }
-
-    public void setInWallWidth(Short inWallWidth) {
-        this.inWallWidth = inWallWidth;
     }
 
     public Set<WallCladding> getWallCladdings() {
@@ -96,14 +113,6 @@ public class Floor extends AbstractElement{
         isFirst = first;
     }
 
-    public Short getOverWidth() {
-        return overWidth;
-    }
-
-    public void setOverWidth(Short overWidth) {
-        this.overWidth = overWidth;
-    }
-
     public FloorResults getFloorResults() {
         return floorResults;
     }
@@ -119,4 +128,6 @@ public class Floor extends AbstractElement{
     public void setFrame(Frame frame) {
         this.frame = frame;
     }
+
+
 }

@@ -1,7 +1,13 @@
 <#import "macros/common.ftl" as c>
 <@c.page>
     <h2 align="center">Карточка клиента</h2>
-    <a class="btn btn-outline-success" href="/newFrame/${customer.id}">Новый каркас</a>
+    <form action="/choice">
+        <input type="hidden" name="customerId" value="${customer.id}">
+        <button class="btn btn-outline-success" type="submit">
+            Новый заказ
+        </button>
+    </form>
+
     <table class="table">
         <thead>
         <tr>
@@ -14,7 +20,15 @@
             <tr>
                 <td>${order.localDateTime}</td>
                 <td>типа актуален</td>
-                <td><a class="btn btn-outline-success" href="/results/${order.id}">тык</a></td>
+                <td>${order.adress}</td>
+                <td>
+                    <form action="/results" method="get">
+                        <input type="hidden" name="orderId" value="${order.id}"/>
+                    <button class="btn btn-outline-success">
+                        Отчет
+                    </button>
+                    </form>
+                </td>
                 <td>
                     <form method="post">
                         <input type="hidden" name="orderId" value="${order.id}"/>

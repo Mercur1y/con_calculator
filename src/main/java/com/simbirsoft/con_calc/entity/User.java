@@ -20,8 +20,10 @@ public class User extends AbstractHuman implements UserDetails{
     @NotBlank
     private String username;
 
-    @NotBlank(message = "Поле пароля не может быть пустым")
+//    @NotBlank(message = "Поле пароля не может быть пустым")
     private String password;
+
+    private String status;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -99,4 +101,11 @@ public class User extends AbstractHuman implements UserDetails{
         this.customers = customers;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

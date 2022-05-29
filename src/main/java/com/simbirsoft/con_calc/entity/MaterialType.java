@@ -17,17 +17,6 @@ public class MaterialType {
     @OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Material> materials;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MaterialUnit unit;
-
-    public MaterialUnit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(MaterialUnit unit) {
-        this.unit = unit;
-    }
-
     public Long getId() {
         return id;
     }

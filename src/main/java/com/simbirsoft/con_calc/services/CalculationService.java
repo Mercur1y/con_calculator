@@ -1,9 +1,9 @@
 package com.simbirsoft.con_calc.services;
 
 import com.simbirsoft.con_calc.entity.Floor;
+import com.simbirsoft.con_calc.entity.Foundation;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,5 +70,29 @@ public class CalculationService {
 
     public double getOverVolumeOfWarm(Floor floor) {
         return round(floor.getSquare() * 2 * 1.1 * floor.getOverWidth() / 1000);
+    }
+
+    public int getCountOfPiles(Foundation foundation) {
+        return (int) ((foundation.getOutPerimeter() + foundation.getInPerimeter()) / 2);
+    }
+
+    public double getVolumeOfConcrete(Foundation foundation) {
+        return round((foundation.getOutPerimeter() + foundation.getInPerimeter()) * 0.3 * 0.4 * 1.15);
+    }
+
+    public int getCountOfBigArm (Foundation foundation) {
+        return (int) ((foundation.getOutPerimeter() + foundation.getInPerimeter()) * 4 / 6);
+    }
+
+    public int getCountOfSmallArm (Foundation foundation) {
+        return (int) ((foundation.getOutPerimeter() + foundation.getInPerimeter()) / 0.3 * 0.5 / 3);
+    }
+
+    public double getVolumeOfGroundWood (Foundation foundation) {
+        return round((foundation.getOutPerimeter() + foundation.getInPerimeter()) * 2 * 0.5 * 0.03);
+    }
+
+    public double getVolumeOfGroundBalk (Foundation foundation) {
+        return round((foundation.getOutPerimeter() + foundation.getInPerimeter()) * 2 / 0.7 * 0.5 * 0.05 * 0.05);
     }
 }

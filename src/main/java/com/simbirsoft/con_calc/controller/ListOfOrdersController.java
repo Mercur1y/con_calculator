@@ -31,7 +31,7 @@ public class ListOfOrdersController {
     }
 
     @PostMapping("{customer}")
-    public String  deleteOrder(
+    public String deleteOrder (
             @PathVariable Customer customer,
             @RequestParam(required = true, defaultValue = "" ) Long orderId,
             @RequestParam(required = true, defaultValue = "" ) String action,

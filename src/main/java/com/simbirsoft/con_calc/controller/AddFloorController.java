@@ -1,10 +1,7 @@
 package com.simbirsoft.con_calc.controller;
 
 import com.simbirsoft.con_calc.entity.*;
-import com.simbirsoft.con_calc.services.CustomerService;
-import com.simbirsoft.con_calc.services.FloorResultsService;
-import com.simbirsoft.con_calc.services.MaterialService;
-import com.simbirsoft.con_calc.services.WallCladdingService;
+import com.simbirsoft.con_calc.services.*;
 import com.simbirsoft.con_calc.view.FloorRepo;
 import com.simbirsoft.con_calc.view.FrameRepo;
 import com.simbirsoft.con_calc.view.HoleRepo;
@@ -14,18 +11,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/newFrame/")
+@RequestMapping("/newFrame")
 public class AddFloorController {
 
     @Autowired
     private FloorRepo floorRepo;
 
     @Autowired
+    private FloorService floorService;
+
+    @Autowired
     private HoleRepo holeRepo;
+
+    @Autowired
+    private HoleService holeService;
 
     @Autowired
     MaterialService materialService;
@@ -42,58 +45,136 @@ public class AddFloorController {
     @Autowired
     FrameRepo frameRepo;
 
-    @GetMapping("{id}")
-    public String addFloorPage(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/add")
+    public String addFloorPage(
+            @RequestParam(required = true, defaultValue = "") Long customerId,
+            @RequestParam(required = true, defaultValue = "") Long orderId,
+            Model model
+    ) {
         model.addAttribute("osb", materialService.getOsbMaterials());
         model.addAttribute("water", materialService.getWaterProofMaterials());
         model.addAttribute("wind", materialService.getWindProofMaterials());
         model.addAttribute("warm", materialService.getWarmProofMaterials());
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("orderId", orderId);
 
-        Customer customer = customerService.findCustomerById(id);
-        model.addAttribute("customer", customer);
         return "newFloor";
     }
 
-    @PostMapping("{customer}")
+    @PostMapping("/add")
     public String save(
-            @PathVariable
-            @ModelAttribute("customer") Customer customer,
-            @RequestParam(required = true, defaultValue = "" ) Long outOsbId,
-            @RequestParam(required = true, defaultValue = "" ) Long outWaterId,
-            @RequestParam(required = true, defaultValue = "" ) Long outWindId,
-            @RequestParam(required = true, defaultValue = "" ) Long outWarmId,
-            @RequestParam(required = true, defaultValue = "" ) Long overOsbId,
-            @RequestParam(required = true, defaultValue = "" ) Long overWaterId,
-            @RequestParam(required = true, defaultValue = "" ) Long overWindId,
-            @RequestParam(required = true, defaultValue = "" ) Long overWarmId,
-            @RequestParam(required = true, defaultValue = "" ) Long inOsbId,
+            @RequestParam(required = true, defaultValue = "") Long customerId,
+            @RequestParam(required = true, defaultValue = "") String outOsbName,
+            @RequestParam(required = true, defaultValue = "") String outWaterName,
+            @RequestParam(required = true, defaultValue = "") String outWindName,
+            @RequestParam(required = true, defaultValue = "") String outWarmName,
+            @RequestParam(required = true, defaultValue = "") String overOsbName,
+            @RequestParam(required = true, defaultValue = "") String overWaterName,
+            @RequestParam(required = true, defaultValue = "") String overWindName,
+            @RequestParam(required = true, defaultValue = "") String overWarmName,
+            @RequestParam(required = true, defaultValue = "") String inOsbName,
+            @RequestParam(required = true, defaultValue = "") Long orderId,
+            @RequestParam(required = true, defaultValue = "") String adress,
             Floor floor,
-            Frame frame,
             Hole hole,
             Model model
     ) {
-        model.addAttribute("hole", hole);
+        Frame order;
+        if(orderId == null) {
+            order = new Frame();
+            Date dateNow = new Date();
+            SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yy");
+            order.setLocalDateTime(formatForDateNow.format(dateNow));
+            order.setAdress(adress);
+            Customer customer = customerService.findCustomerById(customerId);
+            order.setCustomer(customer);
+            frameRepo.save(order);
+        }
+        else order = frameRepo.getById(orderId);
+
+        if(order.getFloors() == null) {
+            floor.setFirst(true);
+            floor.setNumber(1);
+        }
+        else {
+            floor.setFirst(false);
+            floor.setNumber(
+                    (order
+                            .getFloors()
+                            .stream()
+                            .map(Floor::getNumber)
+                            .sorted()
+                            .reduce((a, b) -> b)
+                            .get()) + 1
+            );
+        }
         model.addAttribute("floor", floor);
+        model.addAttribute("hole", hole);
 
-        Date dateNow = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yy");
-
-        frame.setLocalDateTime(formatForDateNow.format(dateNow));
-        frame.setCustomer(customer);
-        frameRepo.save(frame);
-
-        floor.setFrame(frame);
+        floor.setFrame(order);
         floorRepo.save(floor);
         hole.setFloor(floor);
         holeRepo.save(hole);
 
         wallCladdingService
-                .addOutWallCladding(outOsbId,outWaterId,outWindId,outWarmId, floor);
+                .addOutWallCladding(outOsbName,outWaterName,outWindName,outWarmName, floor.getId());
         wallCladdingService
-                .addInWallCladding(inOsbId, floor);
+                .addInWallCladding(inOsbName, floor.getId());
         wallCladdingService
-                .addOverWallCladding(overOsbId, overWaterId, overWindId, overWarmId, floor);
+                .addOverWallCladding(overOsbName, overWaterName, overWindName, overWarmName, floor.getId());
 
         return "redirect:/calculate/" + floor.getId();
+    }
+
+    @GetMapping("/edit")
+    public String editFloor (
+            @RequestParam(required = true, defaultValue = "") Long floorId,
+            Model model
+    ) {
+        model.addAttribute("osb", materialService.getOsbMaterials());
+        model.addAttribute("water", materialService.getWaterProofMaterials());
+        model.addAttribute("wind", materialService.getWindProofMaterials());
+        model.addAttribute("warm", materialService.getWarmProofMaterials());
+        model.addAttribute("floorId", floorId);
+
+        Floor floor = floorRepo.getById(floorId);
+        model.addAttribute("floor", floor);
+        model.addAttribute("holes", floor.getHoles());
+        model.addAttribute("curOutOsb",floor.getFloorResults().getNameOfOutOsb());
+        model.addAttribute("curOutWater",floor.getFloorResults().getNameOfOutWater());
+        model.addAttribute("curOutWind",floor.getFloorResults().getNameOfOutWind());
+        model.addAttribute("curOutWarm",floor.getFloorResults().getNameOfOutWarm());
+        model.addAttribute("curInOsb",floor.getFloorResults().getNameOfInOsb());
+        model.addAttribute("curOverOsb",floor.getFloorResults().getNameOfOverOsb());
+        model.addAttribute("curOverWater",floor.getFloorResults().getNameOfOverWater());
+        model.addAttribute("curOverWind",floor.getFloorResults().getNameOfOverWind());
+        model.addAttribute("curOverWarm",floor.getFloorResults().getNameOfOverWarm());
+
+        return "editFloor";
+    }
+
+    @PostMapping("/edit")
+    public String edit (
+            @RequestParam(required = true, defaultValue = "") Long floorId,
+            @RequestParam(required = true, defaultValue = "") String outOsbName,
+            @RequestParam(required = true, defaultValue = "") String outWaterName,
+            @RequestParam(required = true, defaultValue = "") String outWindName,
+            @RequestParam(required = true, defaultValue = "") String outWarmName,
+            @RequestParam(required = true, defaultValue = "") String overOsbName,
+            @RequestParam(required = true, defaultValue = "") String overWaterName,
+            @RequestParam(required = true, defaultValue = "") String overWindName,
+            @RequestParam(required = true, defaultValue = "") String overWarmName,
+            @RequestParam(required = true, defaultValue = "") String inOsbName,
+            @ModelAttribute("floor") Floor floor
+    ) {
+        floorService.updateFloor(floor, floorId);
+
+        wallCladdingService
+                .addOutWallCladding(outOsbName,outWaterName,outWindName,outWarmName, floorId);
+        wallCladdingService
+                .addInWallCladding(inOsbName, floorId);
+        wallCladdingService
+                .addOverWallCladding(overOsbName, overWaterName, overWindName, overWarmName, floorId);
+        return "redirect:/calculate/" + floorId;
     }
 }

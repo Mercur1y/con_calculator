@@ -40,15 +40,10 @@ public class EditUserController {
     @PostMapping("{id}")
     public String updateProfile(
             @PathVariable("id") Long id,
-            @ModelAttribute("user") @Valid User user,
-            BindingResult bindingResult,
-            Model model
+            @RequestParam("status") String status,
+            @ModelAttribute("user") User user
     ) {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = UtilsController.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-            return "editUser";
-        }
+        user.setStatus(status);
         userService.updateUser(user, id);
         return "redirect:/admin";
     }

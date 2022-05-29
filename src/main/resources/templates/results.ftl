@@ -1,18 +1,33 @@
 <#import "macros/common.ftl" as c>
 <@c.page>
     <h2 align="center">Результаты расчета</h2>
-<#--    <a class="btn btn-outline-success" href="/newFrame/${customer.id}">Новый каркас</a>-->
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th scope="col"> </th>
-            <th scope="col">Материал</th>
-            <th scope="col">Ед. измерения</th>
-            <th scope="col">Количество</th>
-            <th scope="col">Стоимость</th>
-        </tr>
-        <tbody>
-        <#list results as result>
+    <div class="form-row">
+        <form action="/choice/add" method="get">
+            <input type="hidden" name="orderId" value="${orderId}"/>
+            <button type="submit" class="btn btn-outline-success">
+                Добавить
+            </button>
+        </form>
+        <form action="/choice/edit" method="get">
+            <input type="hidden" name="orderId" value="${orderId}"/>
+            <button type="submit" class="btn btn-outline-success">
+                Редактировать
+            </button>
+        </form>
+    </div>
+
+    <#list floorResults as result>
+        <table class="table table-bordered">
+            <h3>Этаж ${result.floor.number}</h3>
+            <thead>
+            <tr>
+                <th scope="col"> </th>
+                <th scope="col">Материал</th>
+                <th scope="col">Ед. измерения</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Стоимость</th>
+            </tr>
+            <tbody>
             <tr class="table-info"><th>Внешние стены</th>
                 <td></td>
                 <td></td>
@@ -121,9 +136,94 @@
                 <td></td>
                 <th>${result.getTotalAllPrice()}</th>
             </tr>
-        <#else>
-            Заказов нет
-        </#list>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    <#else>
+    </#list>
+    <#list foundationResults as result>
+        <table class="table table-bordered">
+            <h3>Фундамент</h3>
+            <thead>
+            <tr>
+                <th scope="col"> </th>
+                <th scope="col">Материал</th>
+                <th scope="col">Ед. измерения</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Стоимость</th>
+            </tr>
+            <tbody>
+            <tr class="table-info"><th>Сваи</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>${result.priceOfPiles}</th>
+            </tr>
+            <tr>
+                <td>Сваи</td>
+                <td>${result.nameOfPiles}</td>
+                <td>шт</td>
+                <td>${result.countOfPiles}</td>
+                <td>${result.priceOfPiles}</td>
+            </tr>
+            <tr class="table-info"><th>Ростверк</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>${result.totalPriceOfGrillage}</th>
+            </tr>
+            <tr>
+                <td>Бетон</td>
+                <td>${result.nameOfConcrete}</td>
+                <td>м3</td>
+                <td>${result.volumeOfConcrete}</td>
+                <td>${result.priceOfConcrete}</td>
+            </tr>
+            <tr>
+                <td>Арматура</td>
+                <td>${result.nameOfBigArm}</td>
+                <td>шт</td>
+                <td>${result.countOfBigArm}</td>
+                <td>${result.priceOfBigArm}</td>
+            </tr>
+            <tr>
+                <td>Арматура</td>
+                <td>${result.nameOfSmallArm}</td>
+                <td>шт</td>
+                <td>${result.countOfSmallArm}</td>
+                <td>${result.priceOfSmallArm}</td>
+            </tr>
+            <tr class="table-info"><th>Опалубка</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>${result.totalPriceOfFormwork}</th>
+            </tr>
+            <tr>
+                <td>Доска</td>
+                <td>${result.nameOfWood}</td>
+                <td>м3</td>
+                <td>${result.volumeOfWood}</td>
+                <td>${result.priceOfWood}</td>
+            </tr>
+            <tr>
+                <td>Брус</td>
+                <td>${result.nameOfBalk}</td>
+                <td>м3</td>
+                <td>${result.volumeOfBalk}</td>
+                <td>${result.priceOfBalk}</td>
+            </tr>
+            <tr class="table-info"><th>ИТОГО</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>${result.totalPrice}</th>
+            </tr>
+            </tbody>
+        </table>
+    <#else>
+    </#list>
+<#--    <table class="table table-bordered">-->
+<#--    <tr class="table-success"><th>ИТОГО: ${total}</th>-->
+<#--    </tr>-->
+<#--    </table>-->
 </@c.page>

@@ -1,8 +1,5 @@
 package com.simbirsoft.con_calc.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -17,8 +14,11 @@ public class Frame {
     private String localDateTime;
     private String adress;
 
-    @OneToMany(mappedBy = "frame", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "frame", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Floor> floors;
+
+    @OneToMany(mappedBy = "frame", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
+    private Set<Foundation> foundations;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
@@ -72,5 +72,13 @@ public class Frame {
 
     public void setFloors(Set<Floor> floors) {
         this.floors = floors;
+    }
+
+    public Set<Foundation> getFoundations() {
+        return foundations;
+    }
+
+    public void setFoundations(Set<Foundation> foundations) {
+        this.foundations = foundations;
     }
 }
