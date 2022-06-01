@@ -14,13 +14,14 @@ import java.util.Set;
 @Table(name = "t_floor")
 public class Floor extends AbstractElement {
 
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
     @Column
     Integer number;
+
+    @Column
+    Double outPerimeter;
+
+    @Column
+    Double inPerimeter;
 
     @Column
     Double height;

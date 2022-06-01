@@ -18,8 +18,7 @@ import java.util.stream.Collectors;
 @Component
 public class UtilsController {
 
-    final
-    PasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager em;

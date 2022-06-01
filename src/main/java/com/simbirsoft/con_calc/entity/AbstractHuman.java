@@ -6,11 +6,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
-@MappedSuperclass
 @Getter
 @Setter
-public abstract class AbstractHuman {
+@NoArgsConstructor
+@MappedSuperclass
+public abstract class AbstractHuman implements Serializable {
 
     @Column
     String last_name;

@@ -14,11 +14,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_role")
-public class Role implements GrantedAuthority {
-
-    @Id
-    @Column
-    Long id;
+public class Role extends AbstractElement implements GrantedAuthority {
 
     @Column
     String name;

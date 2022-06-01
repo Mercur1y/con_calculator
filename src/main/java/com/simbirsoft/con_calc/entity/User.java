@@ -18,7 +18,6 @@ import java.util.Set;
 public class User extends AbstractHuman implements UserDetails{
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "id", initialValue = 2)
     Long id;

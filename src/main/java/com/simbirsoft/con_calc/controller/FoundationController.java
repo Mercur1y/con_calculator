@@ -12,13 +12,9 @@ import org.springframework.web.bind.annotation.*;
 public class FoundationController {
 
     final MaterialService materialService;
-
     final CustomerService customerService;
-
     final WallCladdingService wallCladdingService;
-
     final FoundationService foundationService;
-
     final OrderService orderService;
 
     public FoundationController(MaterialService materialService, CustomerService customerService, WallCladdingService wallCladdingService, FoundationService foundationService, OrderService orderService) {

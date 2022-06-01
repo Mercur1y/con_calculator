@@ -13,12 +13,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_wallcladding")
-public class WallCladding {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class WallCladding extends AbstractElement {
 
     @Column
     @Enumerated(EnumType.STRING)

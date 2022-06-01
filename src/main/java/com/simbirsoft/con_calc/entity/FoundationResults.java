@@ -11,12 +11,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_foundation_results")
-public class FoundationResults {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class FoundationResults extends AbstractElement {
 
     @Column
     String nameOfPiles;

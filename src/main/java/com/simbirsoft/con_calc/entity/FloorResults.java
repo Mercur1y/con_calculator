@@ -13,12 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_floor_results")
-public class FloorResults {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class FloorResults extends AbstractElement {
 
     @Column
     String nameOfOutWood;

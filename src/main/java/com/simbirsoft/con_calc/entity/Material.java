@@ -12,12 +12,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_material")
-public class Material {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class Material extends AbstractElement {
 
     @Column
     String name;

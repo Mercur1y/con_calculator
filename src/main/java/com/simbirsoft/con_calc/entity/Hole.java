@@ -13,12 +13,7 @@ import java.util.stream.DoubleStream;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_hole")
-public class Hole {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class Hole extends AbstractElement {
 
     @Column
     @Enumerated(EnumType.STRING)

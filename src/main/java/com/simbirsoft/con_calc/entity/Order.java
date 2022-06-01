@@ -12,12 +12,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_order")
-public class Order {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class Order extends AbstractElement {
 
     @Column
     Double totalPrice;

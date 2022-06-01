@@ -12,15 +12,16 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "t_foundation")
-public class Foundation extends AbstractElement{
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class Foundation extends AbstractElement {
 
     @Column
     Integer number;
+
+    @Column
+    Double outPerimeter;
+
+    @Column
+    Double inPerimeter;
 
     @OneToMany(mappedBy = "foundation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<WallCladding> wallCladdings;

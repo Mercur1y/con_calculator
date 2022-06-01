@@ -25,7 +25,7 @@
                     </form>
                 </td>
                 <td>
-                    <form action="${springMacroRequestContext.contextPath}/admin" method="post">
+                    <form action="/admin" method="post">
                         <input type="hidden" name="userId" value="${user.id}"/>
                         <input type="hidden" name="_csrf" value="${_csrf.token}" />
                         <input type="hidden" name="action" value="delete"/>
