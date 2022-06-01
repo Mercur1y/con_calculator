@@ -14,14 +14,15 @@ public class CalculationService {
         return Math.ceil(result * Math.pow(10, 2)) / Math.pow(10, 2);
     }
 
-    public double getWallVolumeOfWood(Floor floor, String type) { // сделать подсчет для внутренних проемов
+    public double getWallVolumeOfWood(Floor floor, String type) {
         System.out.println(floor.getHoles());
-        List<Double> list = new ArrayList<>();                    // ну и соответственно установку типа и проверка не него
+        List<Double> list = new ArrayList<>();
         floor.getHoles().forEach(x -> list.add(x.getCountPerimeter()));
 
         double countOfWoodOnOutStand = (floor.getOutPerimeter() / 0.6) + 1;
         double countOfWoodOnInStand = floor.getInPerimeter() / 0.6;
-        double countOfWoodOnGround = floor.getOutPerimeter() * 2 / 3; //если не первый /2
+        double countOfWoodOnGround = floor.getOutPerimeter() * 2 / 3;
+        if(!floor.getIsFirst()) countOfWoodOnGround /= 2; //Если не первый /2
         double countOfWoodOnHoles = list.stream()
                 .mapToDouble(Double::doubleValue).sum() / 3;
 
@@ -46,7 +47,8 @@ public class CalculationService {
     }
 
     public double getOverOsbSquare(Floor floor) {
-        return round(floor.getSquare() * 1.15 * 4); //если не первый /2
+        if(!floor.getIsFirst()) return round(floor.getSquare() * 1.15 * 4 / 2); //Если не первый /2
+        else return round(floor.getSquare() * 1.15 * 4);
     }
 
     public double getOutWindAndWaterSquare(Floor floor) {

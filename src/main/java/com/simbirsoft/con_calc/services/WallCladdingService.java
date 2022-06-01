@@ -8,7 +8,6 @@ import com.simbirsoft.con_calc.view.FloorRepo;
 import com.simbirsoft.con_calc.view.FoundationRepo;
 import com.simbirsoft.con_calc.view.MaterialRepo;
 import com.simbirsoft.con_calc.view.WallCladdingRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,17 +17,17 @@ import java.util.stream.Stream;
 @Service
 public class WallCladdingService {
 
-    @Autowired
-    private WallCladdingRepo wallCladdingRepo;
+    private final WallCladdingRepo wallCladdingRepo;
+    private final FloorRepo floorRepo;
+    private final FoundationRepo foundationRepo;
+    private final MaterialRepo materialRepo;
 
-    @Autowired
-    private FloorRepo floorRepo;
-
-    @Autowired
-    private FoundationRepo foundationRepo;
-
-    @Autowired
-    private MaterialRepo materialRepo;
+    public WallCladdingService(WallCladdingRepo wallCladdingRepo, FloorRepo floorRepo, FoundationRepo foundationRepo, MaterialRepo materialRepo) {
+        this.wallCladdingRepo = wallCladdingRepo;
+        this.floorRepo = floorRepo;
+        this.foundationRepo = foundationRepo;
+        this.materialRepo = materialRepo;
+    }
 
     public WallCladding findWallCladdingById(Long id) {
         Optional<WallCladding> wallCladding = wallCladdingRepo.findById(id);
@@ -42,11 +41,11 @@ public class WallCladdingService {
                 .anyMatch(c -> c.getType().equals(type));
     }
 
-    private boolean existsFoundationByType(Foundation foundation, WallCladdingTypeEnum type) {
+    private boolean existsFoundation(Foundation foundation) {
         if (foundation.getWallCladdings() == null) return false;
         else return foundation.getWallCladdings()
                 .stream()
-                .anyMatch(c -> c.getType().equals(type));
+                .anyMatch(c -> c.getType().equals(WallCladdingTypeEnum.OVERLAP));
     }
 
     private Long getIdFloorByType(Floor floor, WallCladdingTypeEnum type) {
@@ -58,10 +57,10 @@ public class WallCladdingService {
                 .get();
     }
 
-    private Long getIdFoundationByType(Foundation foundation, WallCladdingTypeEnum type) {
+    private Long getFoundationId(Foundation foundation) {
         return foundation.getWallCladdings()
                 .stream()
-                .filter(c -> c.getType().equals(type))
+                .filter(c -> c.getType().equals(WallCladdingTypeEnum.OVERLAP))
                 .map(WallCladding::getId)
                 .findFirst()
                 .get();
@@ -164,13 +163,13 @@ public class WallCladdingService {
         WallCladding foundMaterials;
 
         Foundation foundation = foundationRepo.getById(foundationId);
-        boolean exists = existsFoundationByType(foundation, WallCladdingTypeEnum.OVERLAP);
+        boolean exists = existsFoundation(foundation);
 
         if(!exists) {
             foundMaterials = new WallCladding();
             foundMaterials.setType(WallCladdingTypeEnum.OVERLAP);
         } else {
-            long id = getIdFoundationByType(foundation, WallCladdingTypeEnum.OVERLAP);
+            long id = getFoundationId(foundation);
             foundMaterials = findWallCladdingById(id);
         }
 

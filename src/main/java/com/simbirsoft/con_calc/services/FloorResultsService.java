@@ -15,17 +15,20 @@ import java.util.Set;
 @Service
 public class FloorResultsService {
 
-    @Autowired
-    WallCladdingRepo wallCladdingRepo;
+    final WallCladdingRepo wallCladdingRepo;
 
-    @Autowired
-    FloorResultsRepo floorResultsRepo;
+    final FloorResultsRepo floorResultsRepo;
 
-    @Autowired
-    CalculationService calculationService;
+    final CalculationService calculationService;
 
-    @Autowired
-    MaterialService materialService;
+    final MaterialService materialService;
+
+    public FloorResultsService(WallCladdingRepo wallCladdingRepo, FloorResultsRepo floorResultsRepo, CalculationService calculationService, MaterialService materialService) {
+        this.wallCladdingRepo = wallCladdingRepo;
+        this.floorResultsRepo = floorResultsRepo;
+        this.calculationService = calculationService;
+        this.materialService = materialService;
+    }
 
     public FloorResults findFloorResultsById(Long id) {
         Optional<FloorResults> resultsFromDb = floorResultsRepo.findById(id);

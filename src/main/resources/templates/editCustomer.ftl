@@ -2,6 +2,7 @@
 <#include "macros/security.ftl"/>
 <@c.page>
     <form method="post">
+        <input type="hidden" name="customerId" value="${customer.id}"/>
     <div align="center">
         <div class="col-sm-6">
             <div class="p-2">

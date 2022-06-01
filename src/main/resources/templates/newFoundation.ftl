@@ -1,8 +1,16 @@
 <#import "macros/common.ftl" as c>
 
 <@c.page>
-<form action="/newFoundation/add" method="post">
-    <#if customerId??><input type="hidden" name="customerId" value="${customerId}"></#if>
+<form action="/foundation/add" method="post">
+    <#if customerId??><input type="hidden" name="customerId" value="${customerId}">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label-sm">Адрес:</label>
+            <div class="col-sm-10">
+                <input type="text" name="adress"
+                       class="form-control form-control-sm w-25">
+            </div>
+        </div>
+    </#if>
     <#if orderId??><input type="hidden" name="orderId" value="${orderId}"></#if>
     <div>
         <h5>Фундамент</h5>

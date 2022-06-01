@@ -1,7 +1,8 @@
 package com.simbirsoft.con_calc.controller;
 
-import com.simbirsoft.con_calc.entity.Frame;
-import com.simbirsoft.con_calc.view.FrameRepo;
+import com.simbirsoft.con_calc.entity.Order;
+import com.simbirsoft.con_calc.services.OrderService;
+import com.simbirsoft.con_calc.view.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/choice")
 public class ChoiceController {
 
-    @Autowired
-    FrameRepo frameRepo;
+    final OrderService orderService;
+
+    public ChoiceController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping
     public String choiceNew (
@@ -37,10 +41,10 @@ public class ChoiceController {
             @RequestParam("orderId") Long orderId,
             Model model
             ) {
-        Frame frame = frameRepo.getById(orderId);
-        model.addAttribute("frame", frame);
-        model.addAttribute("floors", frame.getFloors());
-        model.addAttribute("foundations", frame.getFoundations());
+        Order order = orderService.findOrderById(orderId);
+        model.addAttribute("order", order);
+        model.addAttribute("floors", order.getFloors());
+        model.addAttribute("foundations", order.getFoundations());
         return "choiceExists";
     }
 }

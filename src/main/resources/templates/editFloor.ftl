@@ -1,7 +1,7 @@
 <#import "macros/common.ftl" as c>
 
 <@c.page>
-    <form action="/newFrame/edit" method="post">
+    <form action="/floor/edit" method="post">
         <input type="hidden" name="floorId" value="${floorId}">
         <div>
             <h5>Коробка</h5>
@@ -69,7 +69,7 @@
             <h5>Окна и двери</h5>
             <h7>Оконные проемы</h7>
             <div id="hole" class="form-group row">
-                    <#list holes as hole>
+                    <#list floor.holes as hole>
                         <div class="col-sm-2 col-form-label-sm">
                             <label>Высота</label>
                             <input type="text" name="height"
@@ -125,8 +125,8 @@
                 <label class="col-sm-2 col-form-label-sm">ОСБ:</label>
                 <div class="col-sm-10">
                     <select name="outOsbName" class="form-control form-control-sm w-25">
-                        <option value="${curOutOsb}">
-                            ${curOutOsb}
+                        <option value="${results.nameOfOutOsb}">
+                            ${results.nameOfOutOsb}
                         </option>
                         <#list osb as osb>
                             <option value="${osb.name}">${osb.name}</option>
@@ -138,8 +138,8 @@
                 <label class="col-sm-2 col-form-label-sm">Парогидроизоляция:</label>
                 <div class="col-sm-10">
                     <select name="outWaterName" class="form-control form-control-sm w-25">
-                        <option value="${curOutWater}">
-                           ${curOutWater}
+                        <option value="${results.nameOfOutWater}">
+                           ${results.nameOfOutWater}
                         </option>
                         <#list water as water>
                             <option value="${water.name}">${water.name}</option>
@@ -151,8 +151,8 @@
                 <label class="col-sm-2 col-form-label-sm">Ветрозащита:</label>
                 <div class="col-sm-10">
                     <select name="outWindName" class="form-control form-control-sm w-25">
-                        <option value="${curOutWind}">
-                            ${curOutWind}
+                        <option value="${results.nameOfOutWind}">
+                            ${results.nameOfOutWind}
                         </option>
                         <#list wind as wind>
                             <option value="${wind.name}">${wind.name}</option>
@@ -164,8 +164,8 @@
                 <label class="col-sm-2 col-form-label-sm">Теплоизоляция:</label>
                 <div class="col-sm-10">
                     <select name="outWarmName" class="form-control form-control-sm w-25">
-                        <option value="${curOutWarm}">
-                            ${curOutWarm}
+                        <option value="${results.nameOfOutWarm}">
+                            ${results.nameOfOutWarm}
                         </option>
                         <#list warm as warm>
                             <option value="${warm.name}">${warm.name}</option>
@@ -178,8 +178,8 @@
                 <label class="col-sm-2 col-form-label-sm">ОСБ:</label>
                 <div class="col-sm-10">
                     <select name="inOsbName" class="form-control form-control-sm w-25">
-                        <option value="${curInOsb}">
-                            ${curInOsb}
+                        <option value="${results.nameOfInOsb}">
+                            ${results.nameOfInOsb}
                         </option>
                         <#list osb as osb>
                             <option value="${osb.name}">${osb.name}</option>
@@ -206,8 +206,8 @@
                 <label class="col-sm-2 col-form-label-sm">ОСБ:</label>
                 <div class="col-sm-10">
                     <select name="overOsbName" class="form-control form-control-sm w-25">
-                        <option value="${curOverOsb}">
-                            ${curOverOsb}
+                        <option value="${results.nameOfOverOsb}">
+                            ${results.nameOfOverOsb}
                         </option>
                         <#list osb as osb>
                             <option value="${osb.name}">${osb.name}</option>
@@ -219,8 +219,8 @@
                 <label class="col-sm-2 col-form-label-sm">Парогидроизоляция:</label>
                 <div class="col-sm-10">
                     <select name="overWaterName" class="form-control form-control-sm w-25">
-                        <option value="${curOverWater}">
-                            ${curOverWater}
+                        <option value="${results.nameOfOverWater}">
+                            ${results.nameOfOverWater}
                         </option>
                         <#list water as water>
                             <option value="${water.name}">${water.name}</option>
@@ -232,8 +232,8 @@
                 <label class="col-sm-2 col-form-label-sm">Ветрозащита:</label>
                 <div class="col-sm-10">
                     <select name="overWindName" class="form-control form-control-sm w-25">
-                        <option value="${curOverWind}">
-                           ${curOverWind}
+                        <option value="${results.nameOfOverWind}">
+                           ${results.nameOfOverWind}
                         </option>
                         <#list wind as wind>
                             <option value="${wind.name}">${wind.name}</option>
@@ -245,8 +245,8 @@
                 <label class="col-sm-2 col-form-label-sm">Теплоизоляция:</label>
                 <div class="col-sm-10">
                     <select name="overWarmName" class="form-control form-control-sm w-25">
-                        <option value="${curOverWarm}">
-                            ${curOverWarm}
+                        <option value="${results.nameOfOverWarm}">
+                            ${results.nameOfOverWarm}
                         </option>
                         <#list warm as warm>
                             <option value="${warm.name}">${warm.name}</option>

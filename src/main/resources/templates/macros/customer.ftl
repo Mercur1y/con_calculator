@@ -55,7 +55,6 @@
         <div class="col-sm-6">
             <div class="p-2">
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                <input type="hidden" name="id" value="${user.id}" />
                 <button class="btn btn-primary" type="submit">Сохранить</button>
             </div>
         </div>

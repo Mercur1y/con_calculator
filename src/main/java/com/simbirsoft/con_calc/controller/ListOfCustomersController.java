@@ -4,6 +4,7 @@ import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.view.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,25 +12,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/customerList")
+@RequestMapping("/main")
 public class ListOfCustomersController {
 
-    @Autowired
-    CustomerRepo customerRepo;
+    final CustomerRepo customerRepo;
 
-    @GetMapping("{user}")
+    public ListOfCustomersController(CustomerRepo customerRepo) {
+        this.customerRepo = customerRepo;
+    }
+
+    @GetMapping
     public String main(
-            @PathVariable User user,
+            @AuthenticationPrincipal User user,
             Model model
     ) {
         Set<Customer> customersSet = user.getCustomers();
         model.addAttribute("customers", customersSet);
-        model.addAttribute("user", user);
         return "customerList";
     }
 
-    @PostMapping("{user}")
-    public String  deleteUser(
+    @PostMapping
+    public String  deleteCustomer(
             @PathVariable User user,
             @RequestParam(required = true, defaultValue = "" ) Long customerId,
             @RequestParam(required = true, defaultValue = "" ) String action,

@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class HoleService {
 
-    @Autowired
-    HoleRepo holeRepo;
+    final HoleRepo holeRepo;
+
+    public HoleService(HoleRepo holeRepo) {
+        this.holeRepo = holeRepo;
+    }
 
     public void updateHole (Hole hole, Long id) {
         Hole holeFromDB = holeRepo.getById(id);

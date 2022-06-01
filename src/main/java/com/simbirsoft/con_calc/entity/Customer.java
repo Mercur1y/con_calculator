@@ -1,56 +1,30 @@
 package com.simbirsoft.con_calc.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "t_customer")
 public class Customer extends AbstractHuman {
 
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private String adress;
+    @Column
+    String adress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    User user;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    private Set<Frame> frames;
-
-    public Customer() {
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public Set<Frame> getFrames() {
-        return frames;
-    }
-
-    public void setFrames(Set<Frame> frames) {
-        this.frames = frames;
-    }
+    Set<Order> orders;
 }

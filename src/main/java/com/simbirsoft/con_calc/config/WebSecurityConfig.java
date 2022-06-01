@@ -16,11 +16,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    UserService userService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    final UserService userService;
+    final PasswordEncoder passwordEncoder;
+
+    public WebSecurityConfig(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {

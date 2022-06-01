@@ -12,11 +12,13 @@ import java.util.Set;
 @Service
 public class MaterialService {
 
-    @Autowired
-    MaterialRepo materialRepo;
+    final MaterialRepo materialRepo;
+    final MaterialTypeRepo materialTypeRepo;
 
-    @Autowired
-    MaterialTypeRepo materialTypeRepo;
+    public MaterialService(MaterialRepo materialRepo, MaterialTypeRepo materialTypeRepo) {
+        this.materialRepo = materialRepo;
+        this.materialTypeRepo = materialTypeRepo;
+    }
 
     public Set<Material> getWoodMaterials() {
         return materialRepo.findAllByTypeId(1L);

@@ -10,12 +10,19 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    @Autowired
-    private CustomerRepo customerRepo;
+    final CustomerRepo customerRepo;
+
+    public CustomerService(CustomerRepo customerRepo) {
+        this.customerRepo = customerRepo;
+    }
 
     public Customer findCustomerById(Long customerId) {
         Optional<Customer> customerFromDb = customerRepo.findById(customerId);
         return customerFromDb.orElse(new Customer());
+    }
+
+    public void addCustomer(Customer customer) {
+        customerRepo.save(customer);
     }
 
     public void updateCustomer(Customer customer, Long id) {

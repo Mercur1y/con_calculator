@@ -12,21 +12,47 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Calendar;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/customerList/editCustomer")
-public class EditCustomerController {
+@RequestMapping("/customer")
+public class CustomerController {
 
-    @Autowired
-    CustomerRepo customerRepo;
+    final CustomerService customerService;
 
-    @Autowired
-    CustomerService customerService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
-    @GetMapping("{id}")
+    @GetMapping("/add")
+    public String inputPage() {
+        return "newCustomer";
+    }
+
+    @PostMapping("/add")
+    public String add(
+            @AuthenticationPrincipal User user,
+            @ModelAttribute("customer") @Valid Customer customer,
+            BindingResult bindingResult,
+            Model model
+    ) {
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorsMap = UtilsController.getErrors(bindingResult);
+            model.mergeAttributes(errorsMap);
+            return "newCustomer";
+        } else {
+            customer.setUser(user);
+            customerService.addCustomer(customer);
+        }
+
+        return "redirect:/customerList/" + user.getId() + "?";
+    }
+
+    @GetMapping("/edit")
     public String editCustomerPage(
-            @PathVariable("id") Long id,
+            @RequestParam("customerId") Long id,
             Model model
     ) {
         Customer customer = customerService.findCustomerById(id);
@@ -34,9 +60,9 @@ public class EditCustomerController {
         return "editCustomer";
     }
 
-    @PostMapping("{id}")
+    @PostMapping("/edit")
     public String updateCustomer(
-            @PathVariable("id") Long id,
+            @RequestParam("customerId") Long id,
             @AuthenticationPrincipal User user,
             @ModelAttribute("customer") @Valid Customer customer,
             BindingResult bindingResult,

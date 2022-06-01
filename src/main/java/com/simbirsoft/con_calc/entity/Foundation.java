@@ -1,58 +1,34 @@
 package com.simbirsoft.con_calc.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "t_foundation")
 public class Foundation extends AbstractElement{
 
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
+
+    @Column
+    Integer number;
 
     @OneToMany(mappedBy = "foundation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<WallCladding> wallCladdings;
+    Set<WallCladding> wallCladdings;
 
     @OneToOne(mappedBy = "foundation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private FoundationResults foundationResults;
+    FoundationResults foundationResults;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "frame_id", referencedColumnName = "id")
-    private Frame frame;
-
-    public Foundation() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Set<WallCladding> getWallCladdings() {
-        return wallCladdings;
-    }
-
-    public void setWallCladdings(Set<WallCladding> wallCladdings) {
-        this.wallCladdings = wallCladdings;
-    }
-
-    public FoundationResults getFoundationResults() {
-        return foundationResults;
-    }
-
-    public void setFoundationResults(FoundationResults foundationResults) {
-        this.foundationResults = foundationResults;
-    }
-
-    public Frame getFrame() {
-        return frame;
-    }
-
-    public void setFrame(Frame frame) {
-        this.frame = frame;
-    }
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    Order order;
 }

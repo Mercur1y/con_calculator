@@ -1,31 +1,32 @@
 package com.simbirsoft.con_calc.controller;
 
 import com.simbirsoft.con_calc.entity.Customer;
-import com.simbirsoft.con_calc.entity.Frame;
-import com.simbirsoft.con_calc.entity.User;
-import com.simbirsoft.con_calc.services.FrameService;
-import com.simbirsoft.con_calc.view.FrameRepo;
+import com.simbirsoft.con_calc.entity.Order;
+import com.simbirsoft.con_calc.services.OrderService;
+import com.simbirsoft.con_calc.view.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("customerList/orders")
+@RequestMapping("/orders")
 public class ListOfOrdersController {
 
-    @Autowired
-    FrameService frameService;
+    final OrderService orderService;
+    final OrderRepo orderRepo;
 
-    @Autowired
-    FrameRepo frameRepo;
+    public ListOfOrdersController(OrderService orderService, OrderRepo orderRepo) {
+        this.orderService = orderService;
+        this.orderRepo = orderRepo;
+    }
 
     @GetMapping("/{customer}")
     public String listOfOrders (
             @PathVariable Customer customer,
             Model model
     ) {
-        model.addAttribute("orders", customer.getFrames());
+        model.addAttribute("orders", customer.getOrders());
         model.addAttribute("customer", customer);
         return "orders";
     }
@@ -38,9 +39,9 @@ public class ListOfOrdersController {
             Model model) {
 
         if (action.equals("delete")){
-            Frame frame = frameService.findFrameById(orderId);
-            frameRepo.delete(frame);
+            Order order = orderService.findOrderById(orderId);
+            orderRepo.delete(order);
         }
-        return "redirect:/customerList/orders/" + customer.getId();
+        return "redirect:/orders/" + customer.getId();
     }
 }

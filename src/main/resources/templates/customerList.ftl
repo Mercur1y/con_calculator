@@ -1,7 +1,7 @@
 <#import "macros/common.ftl" as c>
 <@c.page>
     <h2 align="center">Клиенты</h2>
-    <a class="btn btn-outline-success" href="/addCustomer">Новый заказчик</a>
+    <a class="btn btn-outline-success" href="/customer/add">Новый заказчик</a>
     <table class="table">
     <thead>
     <tr>
@@ -16,12 +16,13 @@
             <td>${customer.first_name}</td>
             <td>${customer.second_name}</td>
             <td>
-                <form action="orders/${customer.id}" method="get">
+                <form action="/orders/${customer.id}" method="get">
                     <button type="submit" class = "btn btn-outline-success">Заказы</button>
                 </form>
             </td>
             <td>
-                <form action="editCustomer/${customer.id}" method="get">
+                <form action="customer/edit" method="get">
+                    <input type="hidden" name="customerId" value="${customer.id}"/>
                     <button type="submit" class = "btn btn-outline-success">Редактировать</button>
                 </form>
             </td>

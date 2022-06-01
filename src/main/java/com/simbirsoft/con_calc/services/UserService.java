@@ -17,10 +17,13 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    final UserRepo userRepo;
+    final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -67,17 +70,14 @@ public class UserService implements UserDetailsService {
         userRepo.save(userFromDB);
     }
 
-    public boolean deleteUser(Long userId) {
+    public void deleteUser(Long userId) {
         if (userRepo.findById(userId).isPresent()) {
             userRepo.deleteById(userId);
-            return true;
         }
-        return false;
     }
 
     public boolean isAdminAdded () {
         User userFromDb = userRepo.findByUsername("admin");
-
         return userFromDb != null;
     }
 }

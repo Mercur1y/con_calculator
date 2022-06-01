@@ -1,46 +1,42 @@
 package com.simbirsoft.con_calc.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "t_user")
 public class User extends AbstractHuman implements UserDetails{
 
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "id", initialValue = 2)
-    private Long id;
+    Long id;
     
-    @NotBlank
-    private String username;
+    @Column
+    String username;
 
-//    @NotBlank(message = "Поле пароля не может быть пустым")
-    private String password;
+    @Column
+    String password;
 
-    private String status;
+    @Column
+    String status;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    Set<Role> roles;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Customer> customers;
-
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<Customer> customers;
 
     @Override
     public String getUsername() {
@@ -67,45 +63,13 @@ public class User extends AbstractHuman implements UserDetails{
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return roles;
     }
 
     @Override
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Set<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }

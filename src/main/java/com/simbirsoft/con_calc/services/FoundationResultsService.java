@@ -14,17 +14,17 @@ import java.util.Set;
 @Service
 public class FoundationResultsService {
 
-    @Autowired
-    FoundationResultsRepo foundationResultsRepo;
+    final FoundationResultsRepo foundationResultsRepo;
+    final WallCladdingRepo wallCladdingRepo;
+    final CalculationService calculationService;
+    final MaterialService materialService;
 
-    @Autowired
-    WallCladdingRepo wallCladdingRepo;
-
-    @Autowired
-    CalculationService calculationService;
-
-    @Autowired
-    MaterialService materialService;
+    public FoundationResultsService(FoundationResultsRepo foundationResultsRepo, WallCladdingRepo wallCladdingRepo, CalculationService calculationService, MaterialService materialService) {
+        this.foundationResultsRepo = foundationResultsRepo;
+        this.wallCladdingRepo = wallCladdingRepo;
+        this.calculationService = calculationService;
+        this.materialService = materialService;
+    }
 
     public void addUpdateResults (Foundation foundation) {
         FoundationResults foundationResults;
