@@ -1,7 +1,10 @@
 package com.simbirsoft.con_calc.controller;
 
-import com.simbirsoft.con_calc.entity.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.simbirsoft.con_calc.entity.Material;
+import com.simbirsoft.con_calc.entity.MaterialType;
+import com.simbirsoft.con_calc.entity.Role;
+import com.simbirsoft.con_calc.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +19,13 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class UtilsController {
 
-    final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager em;
-
-    public UtilsController(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     static Map<String, String> getErrors(BindingResult bindingResult) {
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(

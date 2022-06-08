@@ -2,28 +2,24 @@ package com.simbirsoft.con_calc.controller;
 
 import com.simbirsoft.con_calc.entity.Foundation;
 import com.simbirsoft.con_calc.entity.Order;
-import com.simbirsoft.con_calc.services.*;
+import com.simbirsoft.con_calc.services.FoundationService;
+import com.simbirsoft.con_calc.services.MaterialService;
+import com.simbirsoft.con_calc.services.OrderService;
+import com.simbirsoft.con_calc.services.WallCladdingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/foundation")
 public class FoundationController {
 
-    final MaterialService materialService;
-    final CustomerService customerService;
-    final WallCladdingService wallCladdingService;
-    final FoundationService foundationService;
-    final OrderService orderService;
-
-    public FoundationController(MaterialService materialService, CustomerService customerService, WallCladdingService wallCladdingService, FoundationService foundationService, OrderService orderService) {
-        this.materialService = materialService;
-        this.customerService = customerService;
-        this.wallCladdingService = wallCladdingService;
-        this.foundationService = foundationService;
-        this.orderService = orderService;
-    }
+    private final MaterialService materialService;
+    private final WallCladdingService wallCladdingService;
+    private final FoundationService foundationService;
+    private final OrderService orderService;
 
     @GetMapping("/add")
     public String addFoundationPage(

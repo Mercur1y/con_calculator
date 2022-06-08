@@ -15,20 +15,20 @@ import java.util.Set;
 public class Order extends AbstractElement {
 
     @Column
-    Double totalPrice;
+    private Double totalPrice;
 
     @Column
-    String localDateTime;
+    private String localDateTime;
 
     @Column
-    String adress;
+    private String adress;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    Set<Floor> floors;
+    private Set<Floor> floors;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    Set<Foundation> foundations;
+    private Set<Foundation> foundations;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Customer customer;
+    private Customer customer;
 }

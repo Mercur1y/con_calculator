@@ -6,25 +6,20 @@ import com.simbirsoft.con_calc.entity.FoundationResults;
 import com.simbirsoft.con_calc.entity.Material;
 import com.simbirsoft.con_calc.view.FoundationResultsRepo;
 import com.simbirsoft.con_calc.view.WallCladdingRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class FoundationResultsService {
 
-    final FoundationResultsRepo foundationResultsRepo;
-    final WallCladdingRepo wallCladdingRepo;
-    final CalculationService calculationService;
-    final MaterialService materialService;
-
-    public FoundationResultsService(FoundationResultsRepo foundationResultsRepo, WallCladdingRepo wallCladdingRepo, CalculationService calculationService, MaterialService materialService) {
-        this.foundationResultsRepo = foundationResultsRepo;
-        this.wallCladdingRepo = wallCladdingRepo;
-        this.calculationService = calculationService;
-        this.materialService = materialService;
-    }
+    private final FoundationResultsRepo foundationResultsRepo;
+    private final WallCladdingRepo wallCladdingRepo;
+    private final CalculationService calculationService;
+    private final MaterialService materialService;
 
     public void addUpdateResults (Foundation foundation) {
         FoundationResults foundationResults;

@@ -25,8 +25,4 @@ public class MapperConfig {
                 .setFieldAccessLevel(PRIVATE);
         return mapper;
     }
-
-    public static <R, E> Set<R> convertList(Set<E> set, Function<E, R> converter) {
-        return set.stream().map(converter).collect(Collectors.toSet());
-    }
 }

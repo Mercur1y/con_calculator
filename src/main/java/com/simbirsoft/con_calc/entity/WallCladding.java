@@ -17,14 +17,14 @@ public class WallCladding extends AbstractElement {
 
     @Column
     @Enumerated(EnumType.STRING)
-    WallCladdingTypeEnum type;
+    private WallCladdingTypeEnum type;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    Set<Material> materials;
+    private Set<Material> materials;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Floor floor;
+    private Floor floor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Foundation foundation;
+    private Foundation foundation;
 }

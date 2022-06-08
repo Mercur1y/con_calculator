@@ -6,6 +6,7 @@ import com.simbirsoft.con_calc.entity.Material;
 import com.simbirsoft.con_calc.entity.enums.WallCladdingTypeEnum;
 import com.simbirsoft.con_calc.view.FloorResultsRepo;
 import com.simbirsoft.con_calc.view.WallCladdingRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +14,13 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class FloorResultsService {
 
-    final WallCladdingRepo wallCladdingRepo;
-
-    final FloorResultsRepo floorResultsRepo;
-
-    final CalculationService calculationService;
-
-    final MaterialService materialService;
-
-    public FloorResultsService(WallCladdingRepo wallCladdingRepo, FloorResultsRepo floorResultsRepo, CalculationService calculationService, MaterialService materialService) {
-        this.wallCladdingRepo = wallCladdingRepo;
-        this.floorResultsRepo = floorResultsRepo;
-        this.calculationService = calculationService;
-        this.materialService = materialService;
-    }
+    private final WallCladdingRepo wallCladdingRepo;
+    private final FloorResultsRepo floorResultsRepo;
+    private final CalculationService calculationService;
+    private final MaterialService materialService;
 
     public FloorResults findFloorResultsById(Long id) {
         Optional<FloorResults> resultsFromDb = floorResultsRepo.findById(id);

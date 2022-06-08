@@ -47,7 +47,7 @@ public class CustomerController {
             customerService.addCustomer(customer);
         }
 
-        return "redirect:/customerList/" + user.getId() + "?";
+        return "redirect:/main";
     }
 
     @GetMapping("/edit")

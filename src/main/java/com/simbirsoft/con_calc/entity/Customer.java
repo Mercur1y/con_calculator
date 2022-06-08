@@ -17,14 +17,14 @@ public class Customer extends AbstractHuman {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column
-    String adress;
+    private String adress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    User user;
+    private User user;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    Set<Order> orders;
+    private Set<Order> orders;
 }

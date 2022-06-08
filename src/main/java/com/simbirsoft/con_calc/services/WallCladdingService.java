@@ -8,6 +8,7 @@ import com.simbirsoft.con_calc.view.FloorRepo;
 import com.simbirsoft.con_calc.view.FoundationRepo;
 import com.simbirsoft.con_calc.view.MaterialRepo;
 import com.simbirsoft.con_calc.view.WallCladdingRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,19 +16,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@RequiredArgsConstructor
 public class WallCladdingService {
 
     private final WallCladdingRepo wallCladdingRepo;
     private final FloorRepo floorRepo;
     private final FoundationRepo foundationRepo;
     private final MaterialRepo materialRepo;
-
-    public WallCladdingService(WallCladdingRepo wallCladdingRepo, FloorRepo floorRepo, FoundationRepo foundationRepo, MaterialRepo materialRepo) {
-        this.wallCladdingRepo = wallCladdingRepo;
-        this.floorRepo = floorRepo;
-        this.foundationRepo = foundationRepo;
-        this.materialRepo = materialRepo;
-    }
 
     public WallCladding findWallCladdingById(Long id) {
         Optional<WallCladding> wallCladding = wallCladdingRepo.findById(id);

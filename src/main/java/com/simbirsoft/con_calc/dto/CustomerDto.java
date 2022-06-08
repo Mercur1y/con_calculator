@@ -5,11 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDto extends AbstractDto {
+public class CustomerDto {
 
     Long id;
     String email;
@@ -18,5 +18,4 @@ public class CustomerDto extends AbstractDto {
     String second_name;
     String phone;
     String adress;
-    UserDto user;
 }

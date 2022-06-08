@@ -15,18 +15,18 @@ import java.io.Serializable;
 public abstract class AbstractHuman implements Serializable {
 
     @Column
-    String last_name;
+    protected String last_name;
 
     @Column
-    String first_name;
+    protected String first_name;
 
     @Column
-    String second_name;
+    protected String second_name;
 
     @Column
-    String email;
+    protected String email;
 
     @Column
-    String phone;
+    protected String phone;
 }
 

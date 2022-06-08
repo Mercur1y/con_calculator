@@ -3,6 +3,7 @@ package com.simbirsoft.con_calc.services;
 import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.view.OrderRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +12,11 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
-    final OrderRepo orderRepo;
-
-    final CustomerService customerService;
-
-    public OrderService(OrderRepo orderRepo, CustomerService customerService) {
-        this.orderRepo = orderRepo;
-        this.customerService = customerService;
-    }
+    private final OrderRepo orderRepo;
+    private final CustomerService customerService;
 
     public Order findOrderById(Long id) {
         Optional<Order> order = orderRepo.findById(id);

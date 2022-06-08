@@ -4,23 +4,19 @@ import com.simbirsoft.con_calc.entity.Floor;
 import com.simbirsoft.con_calc.entity.Foundation;
 import com.simbirsoft.con_calc.services.FloorResultsService;
 import com.simbirsoft.con_calc.services.FoundationResultsService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/calculate/")
 public class CalculateController {
 
-    final FloorResultsService floorResultsService;
-    final FoundationResultsService foundationResultsService;
-
-    public CalculateController(FloorResultsService floorResultsService, FoundationResultsService foundationResultsService) {
-        this.floorResultsService = floorResultsService;
-        this.foundationResultsService = foundationResultsService;
-    }
+    private final FloorResultsService floorResultsService;
+    private final FoundationResultsService foundationResultsService;
 
     @GetMapping("{floor}")
     public String calculate(@PathVariable Floor floor) {

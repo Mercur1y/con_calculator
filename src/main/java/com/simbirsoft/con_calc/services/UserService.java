@@ -1,9 +1,13 @@
 package com.simbirsoft.con_calc.services;
 
-import com.simbirsoft.con_calc.entity.Role;
+import com.simbirsoft.con_calc.dto.CustomerDto;
+import com.simbirsoft.con_calc.dto.RoleDto;
+import com.simbirsoft.con_calc.dto.UserCreationDto;
+import com.simbirsoft.con_calc.dto.UserDto;
 import com.simbirsoft.con_calc.entity.User;
+import com.simbirsoft.con_calc.mapper.UserMapper;
 import com.simbirsoft.con_calc.view.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,19 +15,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    final UserRepo userRepo;
-    final PasswordEncoder passwordEncoder;
-
-    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,29 +38,34 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User findUserById(Long userId) {
+    private User findUserById(Long userId) {
         Optional<User> userFromDb = userRepo.findById(userId);
         return userFromDb.orElse(new User());
     }
 
-    public List<User> allUsers() {
-        return userRepo.findAll();
+    public UserDto get(Long id) {
+        return userMapper.toDto(findUserById(id));
     }
 
-    public boolean addUser(User user) {
+    public Set<UserDto> getAll() {
+        return userRepo.findAll().stream().map(userMapper::toDto).collect(Collectors.toSet());
+    }
+
+    public boolean add(UserCreationDto user) {
         User userFromDB = userRepo.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
             return false;
         }
 
-        user.setRoles(Collections.singleton(new Role(2L, "USER")));
+        user.setRoles(Collections.singleton(new RoleDto(2L, "USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepo.save(user);
+        user.setStatus("В штате");
+        userRepo.save(userMapper.toCreationEntity(user));
         return true;
     }
 
-    public void updateUser(User user, Long id) {
+    public void updateUser(UserDto user, Long id) {
         User userFromDB = userRepo.getById(id);
         userFromDB.setUsername(user.getUsername());
         userFromDB.setEmail(user.getEmail());

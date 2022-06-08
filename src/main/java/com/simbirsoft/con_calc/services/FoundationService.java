@@ -3,19 +3,17 @@ package com.simbirsoft.con_calc.services;
 import com.simbirsoft.con_calc.entity.Foundation;
 import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.view.FoundationRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class FoundationService {
 
-    final FoundationRepo foundationRepo;
-
-    public FoundationService(FoundationRepo foundationRepo) {
-        this.foundationRepo = foundationRepo;
-    }
+    private final FoundationRepo foundationRepo;
 
     public Foundation findFoundationById(Long id) {
         Optional<Foundation> foundationFromDb = foundationRepo.findById(id);

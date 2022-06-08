@@ -4,22 +4,18 @@ import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.services.OrderService;
 import com.simbirsoft.con_calc.view.OrderRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/orders")
 public class ListOfOrdersController {
 
-    final OrderService orderService;
-    final OrderRepo orderRepo;
-
-    public ListOfOrdersController(OrderService orderService, OrderRepo orderRepo) {
-        this.orderService = orderService;
-        this.orderRepo = orderRepo;
-    }
+    private final OrderService orderService;
+    private final OrderRepo orderRepo;
 
     @GetMapping("/{customer}")
     public String listOfOrders (

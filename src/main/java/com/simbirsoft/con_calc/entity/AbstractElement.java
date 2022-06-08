@@ -16,5 +16,5 @@ public abstract class AbstractElement implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    protected Long id;
 }

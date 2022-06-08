@@ -17,19 +17,19 @@ public class Hole extends AbstractElement {
 
     @Column
     @Enumerated(EnumType.STRING)
-    HoleTypeEnum type;
+    private HoleTypeEnum type;
 
     @Column
-    Double width;
+    private Double width;
 
     @Column
-    Double height;
+    private Double height;
 
     @Column
-    Short count;
+    private Short count;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    Floor floor;
+    private Floor floor;
 
     public Double getCountPerimeter() {
         return (this.width + this.height) * 2 * this.count;

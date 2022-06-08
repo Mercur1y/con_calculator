@@ -2,19 +2,17 @@ package com.simbirsoft.con_calc.services;
 
 import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.view.CustomerRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
 
-    final CustomerRepo customerRepo;
-
-    public CustomerService(CustomerRepo customerRepo) {
-        this.customerRepo = customerRepo;
-    }
+    private final CustomerRepo customerRepo;
 
     public Customer findCustomerById(Long customerId) {
         Optional<Customer> customerFromDb = customerRepo.findById(customerId);

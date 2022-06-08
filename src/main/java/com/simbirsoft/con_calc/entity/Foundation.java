@@ -15,21 +15,21 @@ import java.util.Set;
 public class Foundation extends AbstractElement {
 
     @Column
-    Integer number;
+    private Integer number;
 
     @Column
-    Double outPerimeter;
+    private Double outPerimeter;
 
     @Column
-    Double inPerimeter;
+    private Double inPerimeter;
 
     @OneToMany(mappedBy = "foundation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Set<WallCladding> wallCladdings;
+    private Set<WallCladding> wallCladdings;
 
     @OneToOne(mappedBy = "foundation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    FoundationResults foundationResults;
+    private FoundationResults foundationResults;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    Order order;
+    private Order order;
 }

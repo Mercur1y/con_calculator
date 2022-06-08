@@ -7,17 +7,22 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Set;
 
 @EqualsAndHashCode
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserCreationDto {
 
+    @Null
     private Long id;
     @NotBlank
     private String username;
+    @NotBlank
+    private String password;
     @NotBlank
     @Email
     private String email;
@@ -29,8 +34,6 @@ public class UserDto {
     private String second_name;
     @NotBlank
     private String phone;
-
     private String status;
     private Set<RoleDto> roles;
-    private Set<CustomerDto> customers;
 }

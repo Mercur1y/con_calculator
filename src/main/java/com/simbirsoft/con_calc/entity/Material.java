@@ -15,24 +15,24 @@ import java.util.Set;
 public class Material extends AbstractElement {
 
     @Column
-    String name;
+    private String name;
 
     @Column
-    Double price;
+    private Double price;
 
     @Column
-    Integer length;
+    private Integer length;
 
     @Column
-    Integer width;
+    private Integer width;
 
     @Column
-    Integer height;
+    private Integer height;
 
     @Transient
     @ManyToMany(mappedBy = "materials")
-    Set<WallCladding> wallCladdingSet;
+    private Set<WallCladding> wallCladdingSet;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    MaterialType type;
+    private MaterialType type;
 }

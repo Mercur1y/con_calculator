@@ -17,11 +17,11 @@ import java.util.Set;
 public class Role extends AbstractElement implements GrantedAuthority {
 
     @Column
-    String name;
+    private String name;
 
     @Transient
     @ManyToMany(mappedBy = "roles")
-    Set<User> users;
+    private Set<User> users;
 
     public Role(Long id, String name) {
         this.id = id;

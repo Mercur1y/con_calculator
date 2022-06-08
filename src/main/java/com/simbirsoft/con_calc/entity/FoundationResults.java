@@ -14,55 +14,55 @@ import javax.persistence.*;
 public class FoundationResults extends AbstractElement {
 
     @Column
-    String nameOfPiles;
+    private String nameOfPiles;
     @Column
-    Integer countOfPiles;
+    private Integer countOfPiles;
     @Column
-    Double priceOfPiles;
+    private Double priceOfPiles;
 
     @Column
-    String nameOfConcrete;
+    private String nameOfConcrete;
     @Column
-    Double volumeOfConcrete;
+    private Double volumeOfConcrete;
     @Column
-    Double priceOfConcrete;
+    private Double priceOfConcrete;
 
     @Column
-    String nameOfBigArm;
+    private String nameOfBigArm;
     @Column
-    Integer countOfBigArm;
+    private Integer countOfBigArm;
     @Column
-    Double priceOfBigArm;
+    private Double priceOfBigArm;
 
     @Column
-    String nameOfSmallArm;
+    private String nameOfSmallArm;
     @Column
-    Integer countOfSmallArm;
+    private Integer countOfSmallArm;
     @Column
-    Double priceOfSmallArm;
+    private Double priceOfSmallArm;
 
     @Column
-    String nameOfWood;
+    private String nameOfWood;
     @Column
-    Double volumeOfWood;
+    private Double volumeOfWood;
     @Column
-    Double priceOfWood;
+    private Double priceOfWood;
 
     @Column
-    String nameOfBalk;
+    private String nameOfBalk;
     @Column
-    Double volumeOfBalk;
+    private Double volumeOfBalk;
     @Column
-    Double priceOfBalk;
+    private Double priceOfBalk;
 
     @Column
-    Double totalPriceOfGrillage;
+    private Double totalPriceOfGrillage;
     @Column
-    Double totalPriceOfFormwork;
+    private Double totalPriceOfFormwork;
     @Column
-    Double totalPrice;
+    private Double totalPrice;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "foundation_id", referencedColumnName = "id")
-    Foundation foundation;
+    private Foundation foundation;
 }

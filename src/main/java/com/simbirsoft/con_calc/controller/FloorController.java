@@ -1,32 +1,26 @@
 package com.simbirsoft.con_calc.controller;
 
 import com.simbirsoft.con_calc.entity.Floor;
-import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.entity.Hole;
-import com.simbirsoft.con_calc.services.*;
+import com.simbirsoft.con_calc.entity.Order;
+import com.simbirsoft.con_calc.services.FloorService;
+import com.simbirsoft.con_calc.services.MaterialService;
+import com.simbirsoft.con_calc.services.OrderService;
+import com.simbirsoft.con_calc.services.WallCladdingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/floor")
 public class FloorController {
 
-    final FloorService floorService;
-    final MaterialService materialService;
-    final WallCladdingService wallCladdingService;
-    final FloorResultsService floorResultsService;
-    final CustomerService customerService;
-    final OrderService orderService;
-
-    public FloorController(FloorService floorService, MaterialService materialService, WallCladdingService wallCladdingService, FloorResultsService floorResultsService, CustomerService customerService, OrderService orderService) {
-        this.floorService = floorService;
-        this.materialService = materialService;
-        this.wallCladdingService = wallCladdingService;
-        this.floorResultsService = floorResultsService;
-        this.customerService = customerService;
-        this.orderService = orderService;
-    }
+    private final FloorService floorService;
+    private final MaterialService materialService;
+    private final WallCladdingService wallCladdingService;
+    private final OrderService orderService;
 
     @GetMapping("/add")
     public String addFloorPage(

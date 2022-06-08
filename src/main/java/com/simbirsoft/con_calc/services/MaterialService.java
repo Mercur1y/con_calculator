@@ -3,6 +3,7 @@ package com.simbirsoft.con_calc.services;
 import com.simbirsoft.con_calc.entity.Material;
 import com.simbirsoft.con_calc.view.MaterialRepo;
 import com.simbirsoft.con_calc.view.MaterialTypeRepo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,15 +11,11 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class MaterialService {
 
-    final MaterialRepo materialRepo;
-    final MaterialTypeRepo materialTypeRepo;
-
-    public MaterialService(MaterialRepo materialRepo, MaterialTypeRepo materialTypeRepo) {
-        this.materialRepo = materialRepo;
-        this.materialTypeRepo = materialTypeRepo;
-    }
+    private final MaterialRepo materialRepo;
+    private final MaterialTypeRepo materialTypeRepo;
 
     public Set<Material> getWoodMaterials() {
         return materialRepo.findAllByTypeId(1L);

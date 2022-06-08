@@ -4,7 +4,7 @@ import com.simbirsoft.con_calc.entity.FloorResults;
 import com.simbirsoft.con_calc.entity.FoundationResults;
 import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.services.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +15,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/results")
 public class ResultsController {
 
-    final OrderService orderService;
-
-    public ResultsController(OrderService orderService) {
-        this.orderService = orderService;
-    }
+    private final OrderService orderService;
 
     @GetMapping
     public String resultsPage (

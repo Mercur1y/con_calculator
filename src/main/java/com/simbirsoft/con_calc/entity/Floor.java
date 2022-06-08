@@ -15,42 +15,42 @@ import java.util.Set;
 public class Floor extends AbstractElement {
 
     @Column
-    Integer number;
+    private Integer number;
 
     @Column
-    Double outPerimeter;
+    private Double outPerimeter;
 
     @Column
-    Double inPerimeter;
+    private Double inPerimeter;
 
     @Column
-    Double height;
+    private Double height;
 
     @Column
-    Double square;
+    private Double square;
 
     @Column
-    Integer overWidth;
+    private Integer overWidth;
 
     @Column
-    Integer outWallWidth;
+    private Integer outWallWidth;
 
     @Column
-    Integer inWallWidth;
+    private Integer inWallWidth;
 
     @Column
-    Boolean isFirst;
+    private Boolean isFirst;
 
     @OneToMany(mappedBy = "floor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Set<WallCladding> wallCladdings;
+    private Set<WallCladding> wallCladdings;
 
     @OneToMany(mappedBy = "floor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Set<Hole> holes;
+    private Set<Hole> holes;
 
     @OneToOne(mappedBy = "floor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    FloorResults floorResults;
+    private FloorResults floorResults;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    Order order;
+    private Order order;
 }

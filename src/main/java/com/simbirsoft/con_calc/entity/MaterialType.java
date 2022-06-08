@@ -15,8 +15,8 @@ import java.util.Set;
 public class MaterialType extends AbstractElement {
 
     @Column
-    String name;
+    private String name;
 
     @OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Set<Material> materials;
+    private Set<Material> materials;
 }

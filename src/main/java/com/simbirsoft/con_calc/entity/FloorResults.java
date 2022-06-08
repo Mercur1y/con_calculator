@@ -16,99 +16,99 @@ import javax.persistence.*;
 public class FloorResults extends AbstractElement {
 
     @Column
-    String nameOfOutWood;
+    private String nameOfOutWood;
     @Column
-    Double volumeOfOutWood;
+    private Double volumeOfOutWood;
     @Column
-    Double priceOfOutWood;
+    private Double priceOfOutWood;
 
     @Column
-    String nameOfInWood;
+    private String nameOfInWood;
     @Column
-    Double volumeOfInWood;
+    private Double volumeOfInWood;
     @Column
-    Double priceOfInWood;
+    private Double priceOfInWood;
 
     @Column
-    String nameOfOverWood;
+    private String nameOfOverWood;
     @Column
-    Double volumeOfOverWood;
+    private Double volumeOfOverWood;
     @Column
-    Double priceOfOverWood;
+    private Double priceOfOverWood;
 
     @Column
-    String nameOfOutOsb;
+    private String nameOfOutOsb;
     @Column
-    Double squareOfOutOsb;
+    private Double squareOfOutOsb;
     @Column
-    Double priceOfOutOsb;
+    private Double priceOfOutOsb;
 
     @Column
-    String nameOfInOsb;
+    private String nameOfInOsb;
     @Column
-    Double squareOfInOsb;
+    private Double squareOfInOsb;
     @Column
-    Double priceOfInOsb;
+    private Double priceOfInOsb;
 
     @Column
-    String nameOfOverOsb;
+    private String nameOfOverOsb;
     @Column
-    Double squareOfOverOsb;
+    private Double squareOfOverOsb;
     @Column
-    Double priceOfOverOsb;
+    private Double priceOfOverOsb;
 
     @Column
-    String nameOfOutWind;
+    private String nameOfOutWind;
     @Column
-    Double squareOfOutWind;
+    private Double squareOfOutWind;
     @Column
-    Double priceOfOutWind;
+    private Double priceOfOutWind;
 
     @Column
-    String nameOfOutWater;
+    private String nameOfOutWater;
     @Column
-    Double squareOfOutWater;
+    private Double squareOfOutWater;
     @Column
-    Double priceOfOutWater;
+    private Double priceOfOutWater;
 
     @Column
-    String nameOfOverWind;
+    private String nameOfOverWind;
     @Column
-    Double squareOfOverWind;
+    private Double squareOfOverWind;
     @Column
-    Double priceOfOverWind;
+    private Double priceOfOverWind;
 
     @Column
-    String nameOfOverWater;
+    private String nameOfOverWater;
     @Column
-    Double squareOfOverWater;
+    private Double squareOfOverWater;
     @Column
-    Double priceOfOverWater;
+    private Double priceOfOverWater;
 
     @Column
-    String nameOfOutWarm;
+    private String nameOfOutWarm;
     @Column
-    Double volumeOfOutWarm;
+    private Double volumeOfOutWarm;
     @Column
-    Double priceOfOutWarm;
+    private Double priceOfOutWarm;
 
     @Column
-    String nameOfOverWarm;
+    private String nameOfOverWarm;
     @Column
-    Double volumeOfOverWarm;
+    private Double volumeOfOverWarm;
     @Column
-    Double priceOfOverWarm;
+    private Double priceOfOverWarm;
 
     @Column
-    Double totalOutPrice;
+    private Double totalOutPrice;
     @Column
-    Double totalInPrice;
+    private Double totalInPrice;
     @Column
-    Double totalOverPrice;
+    private Double totalOverPrice;
     @Column
-    Double totalAllPrice;
+    private Double totalAllPrice;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "floor_id", referencedColumnName = "id")
-    Floor floor;
+    private Floor floor;
 }

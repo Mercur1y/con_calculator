@@ -20,22 +20,22 @@ public class User extends AbstractHuman implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "id", initialValue = 2)
-    Long id;
+    private Long id;
     
     @Column
-    String username;
+    private String username;
 
     @Column
-    String password;
+    private String password;
 
     @Column
-    String status;
+    private String status;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    Set<Role> roles;
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    Set<Customer> customers;
+    private Set<Customer> customers;
 
     @Override
     public String getUsername() {

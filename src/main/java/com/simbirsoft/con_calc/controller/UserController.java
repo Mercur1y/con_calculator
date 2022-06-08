@@ -1,10 +1,10 @@
 package com.simbirsoft.con_calc.controller;
 
+import com.simbirsoft.con_calc.dto.UserCreationDto;
 import com.simbirsoft.con_calc.dto.UserDto;
 import com.simbirsoft.con_calc.entity.User;
-import com.simbirsoft.con_calc.mapper.UserMapper;
 import com.simbirsoft.con_calc.services.UserService;
-import org.modelmapper.ModelMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,28 +13,18 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
-    final UserService userService;
-    final ModelMapper modelMapper;
-    final UserMapper userMapper;
-
-    public UserController(UserService userService, ModelMapper modelMapper, UserMapper userMapper) {
-        this.userService = userService;
-        this.modelMapper = modelMapper;
-        this.userMapper = userMapper;
-    }
+    private final UserService userService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/admin")
     public String userList(
             Model model) {
-        Set<UserDto> dto = userService.allUsers().stream().map(userMapper::toDto).collect(Collectors.toSet());
-        model.addAttribute("users", dto);
+        model.addAttribute("users", userService.getAll());
         return "admin";
     }
 
@@ -53,7 +43,7 @@ public class UserController {
 
 
     @GetMapping("/user/add")
-    public String registration(Model model) {
+    public String addUserPage(Model model) {
         model.addAttribute("userForm", new User());
 
         return "newUser";
@@ -61,7 +51,7 @@ public class UserController {
 
     @PostMapping("/user/add")
     public String addUser(
-            @Valid User userForm,
+            @Valid UserCreationDto userForm,
             BindingResult bindingResult,
             Model model) {
 
@@ -73,7 +63,7 @@ public class UserController {
             return "newUser";
             }
 
-        if (!userService.addUser(userForm)){
+        if (!userService.add(userForm)){
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return "newUser";
         }
@@ -86,16 +76,15 @@ public class UserController {
             @PathVariable("id") Long id,
             Model model
     ) {
-        User user = userService.findUserById(id);
-        model.addAttribute("user", user);
+        model.addAttribute("user", userService.get(id));
         return "editUser";
     }
 
     @PostMapping("/user/edit/{id}")
-    public String updateProfile(
+    public String updateUser(
             @PathVariable("id") Long id,
             @RequestParam("status") String status,
-            @ModelAttribute("user") User user
+            @ModelAttribute("user") UserDto user
     ) {
         user.setStatus(status);
         userService.updateUser(user, id);
