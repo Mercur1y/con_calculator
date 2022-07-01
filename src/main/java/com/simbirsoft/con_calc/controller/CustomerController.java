@@ -2,9 +2,9 @@ package com.simbirsoft.con_calc.controller;
 
 import com.simbirsoft.con_calc.dto.customer.CustomerCreationDto;
 import com.simbirsoft.con_calc.dto.customer.CustomerEditDto;
-import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.services.CustomerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +16,10 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/customer")
+@RequiredArgsConstructor
 public class CustomerController {
 
-    final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+    private final CustomerService customerService;
 
     @GetMapping("/new")
     public String inputPage() {

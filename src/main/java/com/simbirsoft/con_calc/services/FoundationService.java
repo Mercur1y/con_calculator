@@ -1,6 +1,5 @@
 package com.simbirsoft.con_calc.services;
 
-import com.simbirsoft.con_calc.dto.floor.FloorEditDto;
 import com.simbirsoft.con_calc.dto.foundation.FoundationCreationDto;
 import com.simbirsoft.con_calc.dto.foundation.FoundationEditDto;
 import com.simbirsoft.con_calc.entity.Foundation;
@@ -8,7 +7,6 @@ import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.mapper.FoundationMapper;
 import com.simbirsoft.con_calc.view.FoundationRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

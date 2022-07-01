@@ -1,13 +1,11 @@
 package com.simbirsoft.con_calc.services;
 
-import com.simbirsoft.con_calc.entity.FloorResults;
 import com.simbirsoft.con_calc.entity.Foundation;
 import com.simbirsoft.con_calc.entity.FoundationResults;
 import com.simbirsoft.con_calc.entity.Material;
 import com.simbirsoft.con_calc.view.FoundationResultsRepo;
 import com.simbirsoft.con_calc.view.WallCladdingRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;

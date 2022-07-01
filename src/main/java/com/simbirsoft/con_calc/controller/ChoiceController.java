@@ -26,7 +26,7 @@ public class ChoiceController {
     private final FoundationMapper foundationMapper;
 
     @GetMapping
-    public String choiceNew (
+    public String choiceNew(
             @RequestParam(required = true, defaultValue = "") Long customerId,
             Model model
     ) {
@@ -35,7 +35,7 @@ public class ChoiceController {
     }
 
     @GetMapping("/order")
-    public String choiceAdd (
+    public String choiceAdd(
             @RequestParam(required = true, defaultValue = "") Long orderId,
             Model model
     ) {
@@ -44,10 +44,10 @@ public class ChoiceController {
     }
 
     @GetMapping
-    public String choiceBD (
+    public String choiceBD(
             @RequestParam("orderId") Long orderId,
             Model model
-            ) {
+    ) {
 
         Order order = orderService.findOrderById(orderId);
 

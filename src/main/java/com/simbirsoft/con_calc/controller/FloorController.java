@@ -6,7 +6,6 @@ import com.simbirsoft.con_calc.dto.hole.HoleCreationDto;
 import com.simbirsoft.con_calc.dto.wallCladding.ValidDtoForFloor;
 import com.simbirsoft.con_calc.entity.Floor;
 import com.simbirsoft.con_calc.entity.Order;
-import com.simbirsoft.con_calc.mapper.FloorMapper;
 import com.simbirsoft.con_calc.services.FloorService;
 import com.simbirsoft.con_calc.services.MaterialService;
 import com.simbirsoft.con_calc.services.OrderService;
@@ -29,7 +28,6 @@ public class FloorController {
     private final MaterialService materialService;
     private final WallCladdingService wallCladdingService;
     private final OrderService orderService;
-    private final FloorMapper floorMapper;
 
     @GetMapping("/new")
     public String addFloorPage(
@@ -92,7 +90,7 @@ public class FloorController {
     }
 
     @GetMapping
-    public String editFloor (
+    public String editFloor(
             @RequestParam(defaultValue = "") Long floorId,
             Model model
     ) {
@@ -111,7 +109,7 @@ public class FloorController {
     }
 
     @PostMapping
-    public String edit (
+    public String edit(
             @RequestParam(defaultValue = "") Long floorId,
             @ModelAttribute("wc") @Valid ValidDtoForFloor wc,
             @ModelAttribute("floor") @Valid FloorEditDto floor,
