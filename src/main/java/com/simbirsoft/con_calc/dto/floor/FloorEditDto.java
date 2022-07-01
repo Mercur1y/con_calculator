@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @EqualsAndHashCode
@@ -16,19 +17,19 @@ import java.util.Set;
 public class FloorEditDto {
 
     private Long id;
-
+    @NotBlank
     private Double outPerimeter;
-
+    @NotBlank
     private Double inPerimeter;
-
+    @NotBlank
     private Double height;
-
+    @NotBlank
     private Double square;
-
+    @NotBlank
     private Integer overWidth;
-
+    @NotBlank
     private Integer outWallWidth;
-
+    @NotBlank
     private Integer inWallWidth;
 
     private Set<HoleEditDto> holes;

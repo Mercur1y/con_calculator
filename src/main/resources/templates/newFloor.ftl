@@ -132,7 +132,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">ОСБ:</label>
                 <div class="col-sm-10">
-                    <select name="outOsbName" class="form-control form-control-sm w-25">
+                    <select name= "nameOfOutOsb" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -145,7 +145,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">Парогидроизоляция:</label>
                 <div class="col-sm-10">
-                    <select name="outWaterName" class="form-control form-control-sm w-25">
+                    <select name="nameOfOutWater" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -158,7 +158,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">Ветрозащита:</label>
                 <div class="col-sm-10">
-                    <select name="outWindName" class="form-control form-control-sm w-25">
+                    <select name="nameOfOutWind" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -171,7 +171,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">Теплоизоляция:</label>
                 <div class="col-sm-10">
-                    <select name="outWarmName" class="form-control form-control-sm w-25">
+                    <select name="nameOfOutWarm" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -185,7 +185,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">ОСБ:</label>
                 <div class="col-sm-10">
-                    <select name="inOsbName" class="form-control form-control-sm w-25">
+                    <select name="nameOfInOsb" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -213,7 +213,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">ОСБ:</label>
                 <div class="col-sm-10">
-                    <select name="overOsbName" class="form-control form-control-sm w-25">
+                    <select name="nameOfOverOsb" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -226,7 +226,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">Парогидроизоляция:</label>
                 <div class="col-sm-10">
-                    <select name="overWaterName" class="form-control form-control-sm w-25">
+                    <select name="nameOfOverWater" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -239,7 +239,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">Ветрозащита:</label>
                 <div class="col-sm-10">
-                    <select name="overWindName" class="form-control form-control-sm w-25">
+                    <select name="nameOfOverWind" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>
@@ -252,7 +252,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label-sm">Теплоизоляция:</label>
                 <div class="col-sm-10">
-                    <select name="overWarmName" class="form-control form-control-sm w-25">
+                    <select name="nameOfOverWarm" class="form-control form-control-sm w-25">
                         <option value="" selected disabled hidden>
                             Выбрать
                         </option>

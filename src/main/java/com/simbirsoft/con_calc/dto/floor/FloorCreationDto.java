@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @EqualsAndHashCode
 @Data
 @NoArgsConstructor
@@ -12,20 +14,20 @@ import lombok.NoArgsConstructor;
 public class FloorCreationDto {
 
     private Integer number;
-
+    @NotBlank
     private Double outPerimeter;
-
+    @NotBlank
     private Double inPerimeter;
-
+    @NotBlank
     private Double height;
-
+    @NotBlank
     private Double square;
-
+    @NotBlank
     private Integer overWidth;
-
+    @NotBlank
     private Integer outWallWidth;
-
+    @NotBlank
     private Integer inWallWidth;
-
+    @NotBlank
     private Boolean isFirst;
 }

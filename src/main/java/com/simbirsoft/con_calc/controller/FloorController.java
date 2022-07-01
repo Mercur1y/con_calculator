@@ -3,8 +3,8 @@ package com.simbirsoft.con_calc.controller;
 import com.simbirsoft.con_calc.dto.floor.FloorCreationDto;
 import com.simbirsoft.con_calc.dto.floor.FloorEditDto;
 import com.simbirsoft.con_calc.dto.hole.HoleCreationDto;
+import com.simbirsoft.con_calc.dto.wallCladding.ValidDtoForFloor;
 import com.simbirsoft.con_calc.entity.Floor;
-import com.simbirsoft.con_calc.entity.Hole;
 import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.mapper.FloorMapper;
 import com.simbirsoft.con_calc.services.FloorService;
@@ -14,7 +14,11 @@ import com.simbirsoft.con_calc.services.WallCladdingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,30 +50,43 @@ public class FloorController {
     @PostMapping("/add")
     public String save(
             @RequestParam(defaultValue = "") Long customerId,
-            @RequestParam(defaultValue = "") String outOsbName,
-            @RequestParam(defaultValue = "") String outWaterName,
-            @RequestParam(defaultValue = "") String outWindName,
-            @RequestParam(defaultValue = "") String outWarmName,
-            @RequestParam(defaultValue = "") String overOsbName,
-            @RequestParam(defaultValue = "") String overWaterName,
-            @RequestParam(defaultValue = "") String overWindName,
-            @RequestParam(defaultValue = "") String overWarmName,
-            @RequestParam(defaultValue = "") String inOsbName,
             @RequestParam(defaultValue = "") Long orderId,
             @RequestParam(defaultValue = "") String adress,
-            @ModelAttribute("floor") FloorCreationDto floor,
-            @ModelAttribute("hole") HoleCreationDto hole
+            @ModelAttribute("wc") @Valid ValidDtoForFloor wc,
+            @ModelAttribute("floor") @Valid FloorCreationDto floor,
+            @ModelAttribute("hole") @Valid HoleCreationDto hole,
+            BindingResult bindingResult,
+            Model model
     ) {
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = UtilsController.getErrors(bindingResult);
+            model.mergeAttributes(errors);
+            return "newFloor";
+        }
+
         Order order = orderService.addGetOrder(orderId, customerId, adress);
 
         Floor floorEntity = floorService.addFloor(order, floor, hole);
 
         wallCladdingService
-                .addOutWallCladding(outOsbName,outWaterName,outWindName,outWarmName, floorEntity.getId());
+                .addOutWallCladding(
+                        wc.getNameOfOutOsb(),
+                        wc.getNameOfOutWater(),
+                        wc.getNameOfOutWind(),
+                        wc.getNameOfOutWarm(),
+                        floorEntity.getId()
+                );
         wallCladdingService
-                .addInWallCladding(inOsbName, floorEntity.getId());
+                .addInWallCladding(wc.getNameOfInOsb(), floorEntity.getId());
         wallCladdingService
-                .addOverWallCladding(overOsbName, overWaterName, overWindName, overWarmName, floorEntity.getId());
+                .addOverWallCladding(
+                        wc.getNameOfOverOsb(),
+                        wc.getNameOfOverWater(),
+                        wc.getNameOfOverWind(),
+                        wc.getNameOfOverWarm(),
+                        floorEntity.getId()
+                );
 
         return "redirect:/calculate/" + floorEntity.getId();
     }
@@ -96,26 +113,38 @@ public class FloorController {
     @PostMapping("/edit")
     public String edit (
             @RequestParam(defaultValue = "") Long floorId,
-            @RequestParam(defaultValue = "") String outOsbName,
-            @RequestParam(defaultValue = "") String outWaterName,
-            @RequestParam(defaultValue = "") String outWindName,
-            @RequestParam(defaultValue = "") String outWarmName,
-            @RequestParam(defaultValue = "") String overOsbName,
-            @RequestParam(defaultValue = "") String overWaterName,
-            @RequestParam(defaultValue = "") String overWindName,
-            @RequestParam(defaultValue = "") String overWarmName,
-            @RequestParam(defaultValue = "") String inOsbName,
-            @ModelAttribute("floor") FloorEditDto floor
+            @ModelAttribute("wc") @Valid ValidDtoForFloor wc,
+            @ModelAttribute("floor") @Valid FloorEditDto floor,
+            BindingResult bindingResult,
+            Model model
     ) {
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = UtilsController.getErrors(bindingResult);
+            model.mergeAttributes(errors);
+            return "editFloor";
+        }
 
         floorService.updateFloor(floor, floorId);
 
         wallCladdingService
-                .addOutWallCladding(outOsbName,outWaterName,outWindName,outWarmName, floorId);
+                .addOutWallCladding(
+                        wc.getNameOfOutOsb(),
+                        wc.getNameOfOutWater(),
+                        wc.getNameOfOutWind(),
+                        wc.getNameOfOutWarm(),
+                        floorId
+                );
         wallCladdingService
-                .addInWallCladding(inOsbName, floorId);
+                .addInWallCladding(wc.getNameOfInOsb(), floorId);
         wallCladdingService
-                .addOverWallCladding(overOsbName, overWaterName, overWindName, overWarmName, floorId);
+                .addOverWallCladding(
+                        wc.getNameOfOverOsb(),
+                        wc.getNameOfOverWater(),
+                        wc.getNameOfOverWind(),
+                        wc.getNameOfOverWarm(),
+                        floorId
+                );
         return "redirect:/calculate/" + floorId;
     }
 }

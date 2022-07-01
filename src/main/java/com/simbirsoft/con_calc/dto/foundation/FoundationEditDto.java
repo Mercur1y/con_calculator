@@ -6,14 +6,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @EqualsAndHashCode
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FoundationEditDto {
 
+    @NotBlank
     private Double outPerimeter;
-
+    @NotBlank
     private Double inPerimeter;
 
     private FoundationResultsEditDto foundationResults;

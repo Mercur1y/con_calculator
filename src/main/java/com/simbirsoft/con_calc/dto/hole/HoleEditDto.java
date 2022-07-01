@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @EqualsAndHashCode
 @Data
 @NoArgsConstructor
@@ -12,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class HoleEditDto {
 
     private Long id;
-
+    @NotBlank
     private Double width;
-
+    @NotBlank
     private Double height;
-
+    @NotBlank
     private Short count;
 }

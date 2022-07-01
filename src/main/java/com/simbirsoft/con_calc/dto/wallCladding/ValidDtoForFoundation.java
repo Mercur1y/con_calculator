@@ -1,4 +1,4 @@
-package com.simbirsoft.con_calc.dto.foundation;
+package com.simbirsoft.con_calc.dto.wallCladding;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,11 +11,10 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoundationCreationDto {
+public class ValidDtoForFoundation {
 
-    private Integer number;
     @NotBlank
-    private Double outPerimeter;
+    private String nameOfPiles;
     @NotBlank
-    private Double inPerimeter;
+    private String nameOfConcrete;
 }
