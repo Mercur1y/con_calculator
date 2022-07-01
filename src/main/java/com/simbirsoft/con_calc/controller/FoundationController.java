@@ -28,7 +28,7 @@ public class FoundationController {
     private final FoundationService foundationService;
     private final OrderService orderService;
 
-    @GetMapping("/add")
+    @GetMapping("/new")
     public String addFoundationPage(
             @RequestParam(defaultValue = "") Long customerId,
             @RequestParam(defaultValue = "") Long orderId,
@@ -42,7 +42,7 @@ public class FoundationController {
         return "newFoundation";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/new")
     public String save(
             @RequestParam(defaultValue = "") Long customerId,
             @RequestParam(defaultValue = "") Long orderId,
@@ -72,7 +72,7 @@ public class FoundationController {
         return "redirect:/calculate/foundation/" + foundationEntity.getId();
     }
 
-    @GetMapping("/edit")
+    @GetMapping
     public String editFoundationPage(
             @RequestParam(defaultValue = "") Long foundationId,
             Model model
@@ -91,7 +91,7 @@ public class FoundationController {
         return "editFoundation";
     }
 
-    @PostMapping("/edit")
+    @PostMapping
     public String edit(
             @RequestParam(defaultValue = "") Long foundationId,
             @ModelAttribute("wc") @Valid ValidDtoForFoundation wc,

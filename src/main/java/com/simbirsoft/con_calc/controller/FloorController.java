@@ -31,7 +31,7 @@ public class FloorController {
     private final OrderService orderService;
     private final FloorMapper floorMapper;
 
-    @GetMapping("/add")
+    @GetMapping("/new")
     public String addFloorPage(
             @RequestParam(defaultValue = "") Long customerId,
             @RequestParam(defaultValue = "") Long orderId,
@@ -47,7 +47,7 @@ public class FloorController {
         return "newFloor";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/new")
     public String save(
             @RequestParam(defaultValue = "") Long customerId,
             @RequestParam(defaultValue = "") Long orderId,
@@ -91,7 +91,7 @@ public class FloorController {
         return "redirect:/calculate/" + floorEntity.getId();
     }
 
-    @GetMapping("/edit")
+    @GetMapping
     public String editFloor (
             @RequestParam(defaultValue = "") Long floorId,
             Model model
@@ -110,7 +110,7 @@ public class FloorController {
         return "editFloor";
     }
 
-    @PostMapping("/edit")
+    @PostMapping
     public String edit (
             @RequestParam(defaultValue = "") Long floorId,
             @ModelAttribute("wc") @Valid ValidDtoForFloor wc,

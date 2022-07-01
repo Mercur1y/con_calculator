@@ -1,7 +1,7 @@
 <#import "macros/common.ftl" as c>
 
 <@c.page>
-    <form action="/floor/edit" method="post">
+    <form action="/floor" method="post">
         <input type="hidden" name="floorId" value="${floorId}">
         <div>
             <h5>Коробка</h5>

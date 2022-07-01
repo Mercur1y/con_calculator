@@ -24,12 +24,12 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/add")
+    @GetMapping("/new")
     public String inputPage() {
         return "newCustomer";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/new")
     public String add(
             @AuthenticationPrincipal User user,
             @ModelAttribute("customer") @Valid CustomerCreationDto customer,
@@ -47,7 +47,7 @@ public class CustomerController {
         return "redirect:/main";
     }
 
-    @GetMapping("/edit")
+    @GetMapping
     public String editCustomerPage(
             @RequestParam("customerId") Long id,
             Model model
@@ -56,7 +56,7 @@ public class CustomerController {
         return "editCustomer";
     }
 
-    @PostMapping("/edit")
+    @PostMapping
     public String updateCustomer(
             @RequestParam("customerId") Long id,
             @ModelAttribute("customer") @Valid CustomerEditDto customer,

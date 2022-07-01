@@ -34,7 +34,7 @@ public class ChoiceController {
         return "choice";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/order")
     public String choiceAdd (
             @RequestParam(required = true, defaultValue = "") Long orderId,
             Model model
@@ -43,7 +43,7 @@ public class ChoiceController {
         return "choice";
     }
 
-    @GetMapping ("/edit")
+    @GetMapping
     public String choiceBD (
             @RequestParam("orderId") Long orderId,
             Model model

@@ -2,13 +2,13 @@
 <@c.page>
     <h2 align="center">Результаты расчета</h2>
     <div class="form-row">
-        <form action="/choice/add" method="get">
+        <form action="/choice/order" method="get">
             <input type="hidden" name="orderId" value="${orderId}"/>
             <button type="submit" class="btn btn-outline-success">
                 Добавить
             </button>
         </form>
-        <form action="/choice/edit" method="get">
+        <form action="/choice" method="get">
             <input type="hidden" name="orderId" value="${orderId}"/>
             <button type="submit" class="btn btn-outline-success">
                 Редактировать

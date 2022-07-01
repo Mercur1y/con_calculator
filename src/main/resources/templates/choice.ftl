@@ -5,7 +5,7 @@
             <h3>элемента</h3>
             <div class="col-sm-3">
                 <div class="p-2">
-                    <form action="/floor/add" method="get">
+                    <form action="/floor/new" method="get">
                         <#if customerId??><input type="hidden" name="customerId" value="${customerId}"></#if>
                         <#if orderId??><input type="hidden" name="orderId" value="${orderId}"></#if>
                         <button type="submit" class = "btn btn-primary btn-block"> Каркас этажа </button>
@@ -14,7 +14,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="p-2">
-                    <form action="/foundation/add" method="get">
+                    <form action="/foundation/new" method="get">
                         <#if customerId??><input type="hidden" name="customerId" value="${customerId}"></#if>
                        <#if orderId??> <input type="hidden" name="orderId" value="${orderId}"></#if>
                         <button type="submit" class = "btn btn-primary btn-block">Фундамент</button>

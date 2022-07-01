@@ -1,7 +1,7 @@
 <#import "macros/common.ftl" as c>
 
 <@c.page>
-    <form action="/foundation/edit" method="post">
+    <form action="/foundation" method="post">
         <input type="hidden" name="foundationId" value="${foundationId}">
         <div>
             <h5>Фундамент</h5>

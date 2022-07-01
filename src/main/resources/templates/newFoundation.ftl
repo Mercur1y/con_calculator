@@ -1,7 +1,7 @@
 <#import "macros/common.ftl" as c>
 
 <@c.page>
-<form action="/foundation/add" method="post">
+<form action="/foundation/new" method="post">
     <#if customerId??><input type="hidden" name="customerId" value="${customerId}">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label-sm">Адрес:</label>
