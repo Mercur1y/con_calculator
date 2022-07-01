@@ -1,7 +1,7 @@
 package com.simbirsoft.con_calc.controller;
 
-import com.simbirsoft.con_calc.dto.UserCreationDto;
-import com.simbirsoft.con_calc.dto.UserDto;
+import com.simbirsoft.con_calc.dto.user.UserCreationDto;
+import com.simbirsoft.con_calc.dto.user.UserEditDto;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -42,14 +42,14 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/add")
+    @GetMapping("/user/new")
     public String addUserPage(Model model) {
         model.addAttribute("userForm", new User());
 
         return "newUser";
     }
 
-    @PostMapping("/user/add")
+    @PostMapping("/user/new")
     public String addUser(
             @Valid UserCreationDto userForm,
             BindingResult bindingResult,
@@ -71,20 +71,20 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/user/edit/{id}")
+    @GetMapping("/user/{id}")
     public String editUserPage(
             @PathVariable("id") Long id,
             Model model
     ) {
-        model.addAttribute("user", userService.get(id));
+        model.addAttribute("user", userService.getForEdit(id));
         return "editUser";
     }
 
-    @PostMapping("/user/edit/{id}")
+    @PostMapping("/user/{id}")
     public String updateUser(
             @PathVariable("id") Long id,
             @RequestParam("status") String status,
-            @ModelAttribute("user") UserDto user
+            @ModelAttribute("user") UserEditDto user
     ) {
         user.setStatus(status);
         userService.updateUser(user, id);

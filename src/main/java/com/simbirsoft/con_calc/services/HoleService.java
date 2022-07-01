@@ -1,5 +1,6 @@
 package com.simbirsoft.con_calc.services;
 
+import com.simbirsoft.con_calc.dto.hole.HoleEditDto;
 import com.simbirsoft.con_calc.entity.Hole;
 import com.simbirsoft.con_calc.view.HoleRepo;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ public class HoleService {
 
     private final HoleRepo holeRepo;
 
-    public void updateHole (Hole hole, Long id) {
+    public void updateHole (HoleEditDto hole, Long id) {
         Hole holeFromDB = holeRepo.getById(id);
         holeFromDB.setWidth(hole.getWidth());
         holeFromDB.setHeight(hole.getHeight());

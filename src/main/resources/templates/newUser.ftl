@@ -4,6 +4,6 @@
 <@c.page>
     <div align="center">
         <div class="mb-1"><h3>Добавить пользователя</h3></div>
-        <@l.login "/user/add" true />
+        <@l.login "/user/new" true />
     </div>
 </@c.page>

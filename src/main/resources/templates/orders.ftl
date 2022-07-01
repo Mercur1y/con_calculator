@@ -2,7 +2,7 @@
 <@c.page>
     <h2 align="center">Карточка клиента</h2>
     <form action="/choice">
-        <#if customer??><input type="hidden" name="customerId" value="${customer.id}"></#if>
+        <#if customerId??><input type="hidden" name="customerId" value="${customerId}"></#if>
         <button class="btn btn-outline-success" type="submit">
             Новый заказ
         </button>
@@ -32,7 +32,7 @@
                 <td>
                     <form method="post">
                         <input type="hidden" name="orderId" value="${order.id}"/>
-                        <input type="hidden" name="customerId" value="${customer.id}">
+                        <input type="hidden" name="customerId" value="${customerId}">
                         <input type="hidden" name="action" value="delete"/>
                         <input type="hidden" name="_csrf" value="${_csrf.token}" />
                         <button type="submit" class="btn btn-outline-danger">

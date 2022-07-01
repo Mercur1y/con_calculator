@@ -1,5 +1,7 @@
 package com.simbirsoft.con_calc.controller;
 
+import com.simbirsoft.con_calc.dto.foundation.FoundationCreationDto;
+import com.simbirsoft.con_calc.dto.foundation.FoundationEditDto;
 import com.simbirsoft.con_calc.entity.Foundation;
 import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.services.FoundationService;
@@ -42,16 +44,18 @@ public class FoundationController {
             @RequestParam(defaultValue = "") String concreteName,
             @RequestParam(defaultValue = "") Long orderId,
             @RequestParam(defaultValue = "") String adress,
-            Foundation foundation
+            FoundationCreationDto foundation
     ) {
 
         Order order = orderService.addGetOrder(orderId, customerId, adress);
 
-        foundationService.addFoundation(order, foundation);
+        Foundation foundationEntity = foundationService.addFoundation(order, foundation);
 
-        wallCladdingService.addFoundationMaterials(pilesName, concreteName, foundation.getId());
+        wallCladdingService
+                .addFoundationMaterials
+                        (pilesName, concreteName, foundationEntity.getId());
 
-        return "redirect:/calculate/foundation/" + foundation.getId();
+        return "redirect:/calculate/foundation/" + foundationEntity.getId();
     }
 
     @GetMapping("/edit")
@@ -64,7 +68,8 @@ public class FoundationController {
         model.addAttribute("concrete", materialService.getConcreteMaterials());
         model.addAttribute("foundationId", foundationId);
 
-        Foundation foundation = foundationService.findFoundationById(foundationId);
+        FoundationEditDto foundation = foundationService.getForEdit(foundationId);
+
         model.addAttribute("foundation", foundation);
         model.addAttribute("curConcrete", foundation.getFoundationResults().getNameOfConcrete());
         model.addAttribute("curPiles", foundation.getFoundationResults().getNameOfPiles());
@@ -77,10 +82,11 @@ public class FoundationController {
             @RequestParam(defaultValue = "") Long foundationId,
             @RequestParam(defaultValue = "") String pilesName,
             @RequestParam(defaultValue = "") String concreteName,
-            @ModelAttribute("foundation") Foundation foundation
+            @ModelAttribute("foundation") FoundationEditDto foundation
     ) {
         foundationService.updateFoundation(foundation, foundationId);
-        wallCladdingService.addFoundationMaterials(pilesName, concreteName, foundationId);
+        wallCladdingService
+                .addFoundationMaterials(pilesName, concreteName, foundationId);
 
         return "redirect:/calculate/foundation/" + foundationId;
     }

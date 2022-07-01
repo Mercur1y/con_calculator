@@ -78,7 +78,7 @@
 
 <#macro registration>
     <#if !user??>
-        <form action="/user/add" method="get">
+        <form action="/user/new" method="get">
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <button class="btn btn-primary" type="submit">Registration</button>
         </form>

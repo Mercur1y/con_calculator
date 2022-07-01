@@ -1,4 +1,4 @@
-package com.simbirsoft.con_calc.dto;
+package com.simbirsoft.con_calc.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserEditDto {
 
     private Long id;
     @NotBlank
@@ -22,15 +22,13 @@ public class UserDto {
     @Email
     private String email;
     @NotBlank
-    private String last_name;
+    private String lastName;
     @NotBlank
-    private String first_name;
+    private String firstName;
     @NotBlank
-    private String second_name;
+    private String secondName;
     @NotBlank
     private String phone;
 
     private String status;
-    private Set<RoleDto> roles;
-    private Set<CustomerDto> customers;
 }

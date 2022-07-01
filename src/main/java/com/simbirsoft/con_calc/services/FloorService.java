@@ -1,8 +1,14 @@
 package com.simbirsoft.con_calc.services;
 
+import com.simbirsoft.con_calc.dto.floor.FloorCreationDto;
+import com.simbirsoft.con_calc.dto.floor.FloorEditDto;
+import com.simbirsoft.con_calc.dto.hole.HoleCreationDto;
+import com.simbirsoft.con_calc.dto.user.UserEditDto;
 import com.simbirsoft.con_calc.entity.Floor;
 import com.simbirsoft.con_calc.entity.Order;
 import com.simbirsoft.con_calc.entity.Hole;
+import com.simbirsoft.con_calc.mapper.FloorMapper;
+import com.simbirsoft.con_calc.mapper.HoleMapper;
 import com.simbirsoft.con_calc.view.FloorRepo;
 import com.simbirsoft.con_calc.view.HoleRepo;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +24,19 @@ public class FloorService {
     private final FloorRepo floorRepo;
     private final HoleRepo holeRepo;
 
+    private final FloorMapper floorMapper;
+    private final HoleMapper holeMapper;
+
     public Floor findFloorById(Long id) {
         Optional<Floor> floorFromDb = floorRepo.findById(id);
         return floorFromDb.orElse(new Floor());
     }
 
-    public void addFloor (Order order, Floor floor, Hole hole) {
+    public FloorEditDto getForEdit(Long id) {
+        return floorMapper.toEditDto(findFloorById(id));
+    }
+
+    public Floor addFloor (Order order, FloorCreationDto floor, HoleCreationDto hole) {
 
         if(order.getFloors() == null || order.getFloors().isEmpty()) {
             floor.setIsFirst(true);
@@ -42,14 +55,17 @@ public class FloorService {
             );
         }
 
-        floor.setOrder(order);
-        floorRepo.save(floor);
+        Floor floorEntity = floorMapper.toCreationEntity(floor);
+        floorEntity.setOrder(order);
+        floorRepo.save(floorEntity);
 
-        hole.setFloor(floor);
-        holeRepo.save(hole);
+        Hole holeEntity = holeMapper.toCreationEntity(hole);
+        holeEntity.setFloor(floorEntity);
+        holeRepo.save(holeEntity);
+        return floorEntity;
     }
 
-    public void updateFloor(Floor floor, Long id) {
+    public void updateFloor(FloorEditDto floor, Long id) {
         Floor floorFromDb = floorRepo.getById(id);
         floorFromDb.setInPerimeter(floor.getInPerimeter());
         floorFromDb.setOutPerimeter(floor.getOutPerimeter());

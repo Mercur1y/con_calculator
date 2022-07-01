@@ -2,7 +2,7 @@
 <#--    <#include "macros/security.ftl"/>-->
 
 <@c.page>
-    <form action="/user/edit/${user.id}" method="post">
+    <form action="/user/${user.id}" method="post">
         <div class="form-group">
             <div class="col-sm-6">
                 <div class="p-2">

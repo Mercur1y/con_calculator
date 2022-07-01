@@ -1,10 +1,10 @@
 package com.simbirsoft.con_calc.controller;
 
+import com.simbirsoft.con_calc.dto.customer.CustomerCreationDto;
+import com.simbirsoft.con_calc.dto.customer.CustomerEditDto;
 import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.services.CustomerService;
-import com.simbirsoft.con_calc.view.CustomerRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Calendar;
 import java.util.Map;
 
 @Controller
@@ -33,7 +32,7 @@ public class CustomerController {
     @PostMapping("/add")
     public String add(
             @AuthenticationPrincipal User user,
-            @ModelAttribute("customer") @Valid Customer customer,
+            @ModelAttribute("customer") @Valid CustomerCreationDto customer,
             BindingResult bindingResult,
             Model model
     ) {
@@ -43,10 +42,8 @@ public class CustomerController {
             model.mergeAttributes(errorsMap);
             return "newCustomer";
         } else {
-            customer.setUser(user);
-            customerService.addCustomer(customer);
+            customerService.addCustomerToUser(customer, user);
         }
-
         return "redirect:/main";
     }
 
@@ -55,16 +52,14 @@ public class CustomerController {
             @RequestParam("customerId") Long id,
             Model model
     ) {
-        Customer customer = customerService.findCustomerById(id);
-        model.addAttribute("customer", customer);
+        model.addAttribute("customer", customerService.getForEdit(id));
         return "editCustomer";
     }
 
     @PostMapping("/edit")
     public String updateCustomer(
             @RequestParam("customerId") Long id,
-            @AuthenticationPrincipal User user,
-            @ModelAttribute("customer") @Valid Customer customer,
+            @ModelAttribute("customer") @Valid CustomerEditDto customer,
             BindingResult bindingResult,
             Model model
     ) {
@@ -75,6 +70,6 @@ public class CustomerController {
             return "editCustomer";
         }
         customerService.updateCustomer(customer, id);
-        return "redirect:/customerList/" + user.getId() + "?";
+        return "redirect:/main";
     }
 }

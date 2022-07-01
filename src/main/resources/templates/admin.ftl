@@ -2,7 +2,7 @@
 <#include "macros/security.ftl">
 <@c.page>
     <h3>Список пользователей</h3>
-    <form action="/user/add" method="get">
+    <form action="/user/new" method="get">
         <button class = "btn btn-primary">Добавить</button>
     </form>
 
@@ -20,7 +20,7 @@
                 <td>${user.username}</td>
                 <td><#list user.roles as role>${role.name}</#list></td>
                 <td>
-                    <form action="user/edit/${user.id}" method="get">
+                    <form action="user/${user.id}" method="get">
                         <button type="submit" class = "btn btn-success">Редактировать</button>
                     </form>
                 </td>

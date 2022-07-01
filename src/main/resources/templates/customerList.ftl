@@ -12,9 +12,9 @@
     <tbody>
     <#list customers as customer>
         <tr>
-            <td>${customer.last_name}</td>
-            <td>${customer.first_name}</td>
-            <td>${customer.second_name}</td>
+            <td>${customer.lastName}</td>
+            <td>${customer.firstName}</td>
+            <td>${customer.secondName}</td>
             <td>
                 <form action="/orders/${customer.id}" method="get">
                     <button type="submit" class = "btn btn-outline-success">Заказы</button>

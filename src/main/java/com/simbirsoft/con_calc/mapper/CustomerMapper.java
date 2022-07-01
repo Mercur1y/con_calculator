@@ -1,9 +1,9 @@
 package com.simbirsoft.con_calc.mapper;
 
-import com.simbirsoft.con_calc.dto.CustomerDto;
-import com.simbirsoft.con_calc.dto.UserDto;
+import com.simbirsoft.con_calc.dto.customer.CustomerCreationDto;
+import com.simbirsoft.con_calc.dto.customer.CustomerEditDto;
+import com.simbirsoft.con_calc.dto.customer.CustomerListDto;
 import com.simbirsoft.con_calc.entity.Customer;
-import com.simbirsoft.con_calc.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,27 @@ public class CustomerMapper {
 
     private final ModelMapper mapper;
 
-    public Customer toEntity(CustomerDto dto) {
-        return Objects.isNull(dto) ? null : mapper.map(dto, Customer.class);
+    public Customer toCreationEntity(CustomerCreationDto dto) {
+        return mapper.map(dto, Customer.class);
     }
 
-    public CustomerDto toDto(Customer entity) {
-        return Objects.isNull(entity) ? null : mapper.map(entity, CustomerDto.class);
+    public CustomerCreationDto toCreationDto(Customer entity) {
+        return mapper.map(entity, CustomerCreationDto.class);
+    }
+
+    public Customer toListEntity(CustomerListDto dto) {
+        return mapper.map(dto, Customer.class);
+    }
+
+    public CustomerListDto toListDto(Customer entity) {
+        return mapper.map(entity, CustomerListDto.class);
+    }
+
+    public Customer toEditEntity(CustomerEditDto dto) {
+        return mapper.map(dto, Customer.class);
+    }
+
+    public CustomerEditDto toEditDto(Customer entity) {
+        return mapper.map(entity, CustomerEditDto.class);
     }
 }

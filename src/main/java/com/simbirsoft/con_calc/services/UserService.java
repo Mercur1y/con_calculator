@@ -1,10 +1,13 @@
 package com.simbirsoft.con_calc.services;
 
-import com.simbirsoft.con_calc.dto.CustomerDto;
-import com.simbirsoft.con_calc.dto.RoleDto;
-import com.simbirsoft.con_calc.dto.UserCreationDto;
-import com.simbirsoft.con_calc.dto.UserDto;
+import com.simbirsoft.con_calc.dto.*;
+import com.simbirsoft.con_calc.dto.customer.CustomerCreationDto;
+import com.simbirsoft.con_calc.dto.customer.CustomerListDto;
+import com.simbirsoft.con_calc.dto.user.UserCreationDto;
+import com.simbirsoft.con_calc.dto.user.UserEditDto;
+import com.simbirsoft.con_calc.dto.user.UserListDto;
 import com.simbirsoft.con_calc.entity.User;
+import com.simbirsoft.con_calc.mapper.CustomerMapper;
 import com.simbirsoft.con_calc.mapper.UserMapper;
 import com.simbirsoft.con_calc.view.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
     private final UserMapper userMapper;
+    private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -43,12 +47,17 @@ public class UserService implements UserDetailsService {
         return userFromDb.orElse(new User());
     }
 
-    public UserDto get(Long id) {
-        return userMapper.toDto(findUserById(id));
+    public UserEditDto getForEdit(Long id) {
+        return userMapper.toEditDto(findUserById(id));
     }
 
-    public Set<UserDto> getAll() {
-        return userRepo.findAll().stream().map(userMapper::toDto).collect(Collectors.toSet());
+    public Set<CustomerListDto> getDtoCustomersByUserId(Long id) {
+        User user = findUserById(id);
+        return user.getCustomers().stream().map(customerMapper::toListDto).collect(Collectors.toSet());
+    }
+
+    public Set<UserListDto> getAll() {
+        return userRepo.findAll().stream().map(userMapper::toListDto).collect(Collectors.toSet());
     }
 
     public boolean add(UserCreationDto user) {
@@ -65,13 +74,13 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public void updateUser(UserDto user, Long id) {
+    public void updateUser(UserEditDto user, Long id) {
         User userFromDB = userRepo.getById(id);
         userFromDB.setUsername(user.getUsername());
         userFromDB.setEmail(user.getEmail());
-        userFromDB.setFirst_name(user.getFirst_name());
-        userFromDB.setSecond_name(user.getSecond_name());
-        userFromDB.setLast_name(user.getLast_name());
+        userFromDB.setFirstName(user.getFirstName());
+        userFromDB.setSecondName(user.getSecondName());
+        userFromDB.setLastName(user.getLastName());
         userFromDB.setPhone(user.getPhone());
         userFromDB.setStatus(user.getStatus());
         userRepo.save(userFromDB);

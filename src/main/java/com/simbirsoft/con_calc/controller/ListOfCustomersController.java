@@ -1,19 +1,13 @@
 package com.simbirsoft.con_calc.controller;
 
-import com.simbirsoft.con_calc.dto.CustomerDto;
-import com.simbirsoft.con_calc.dto.UserDto;
-import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.services.UserService;
 import com.simbirsoft.con_calc.view.CustomerRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +22,7 @@ public class ListOfCustomersController {
             @AuthenticationPrincipal User user,
             Model model
     ) {
-        model.addAttribute("customers", userService.get(user.getId()).getCustomers());
+        model.addAttribute("customers", userService.getDtoCustomersByUserId(user.getId()));
         return "customerList";
     }
 

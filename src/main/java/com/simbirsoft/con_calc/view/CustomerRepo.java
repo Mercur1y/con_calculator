@@ -8,5 +8,4 @@ import java.util.Set;
 
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
-    Set<Customer> findAllByIdIn(Set<Long> ids);
 }

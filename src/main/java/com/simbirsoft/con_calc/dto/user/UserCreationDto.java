@@ -1,5 +1,6 @@
-package com.simbirsoft.con_calc.dto;
+package com.simbirsoft.con_calc.dto.user;
 
+import com.simbirsoft.con_calc.dto.RoleDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.util.Set;
 
 @EqualsAndHashCode
@@ -17,8 +16,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserCreationDto {
 
-    @Null
-    private Long id;
     @NotBlank
     private String username;
     @NotBlank
@@ -27,13 +24,15 @@ public class UserCreationDto {
     @Email
     private String email;
     @NotBlank
-    private String last_name;
+    private String lastName;
     @NotBlank
-    private String first_name;
+    private String firstName;
     @NotBlank
-    private String second_name;
+    private String secondName;
     @NotBlank
     private String phone;
+
     private String status;
+
     private Set<RoleDto> roles;
 }

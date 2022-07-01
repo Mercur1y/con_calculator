@@ -2,6 +2,7 @@ package com.simbirsoft.con_calc.controller;
 
 import com.simbirsoft.con_calc.entity.Customer;
 import com.simbirsoft.con_calc.entity.Order;
+import com.simbirsoft.con_calc.services.CustomerService;
 import com.simbirsoft.con_calc.services.OrderService;
 import com.simbirsoft.con_calc.view.OrderRepo;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +16,15 @@ import org.springframework.web.bind.annotation.*;
 public class ListOfOrdersController {
 
     private final OrderService orderService;
+    private final CustomerService customerService;
     private final OrderRepo orderRepo;
 
-    @GetMapping("/{customer}")
+    @GetMapping("/{customerId}")
     public String listOfOrders (
-            @PathVariable Customer customer,
+            @PathVariable Long customerId,
             Model model
     ) {
-        model.addAttribute("orders", customer.getOrders());
-        model.addAttribute("customer", customer);
+        model.addAttribute("orders", customerService.getDtoOrdersByCustomerId(customerId));
         return "orders";
     }
 
