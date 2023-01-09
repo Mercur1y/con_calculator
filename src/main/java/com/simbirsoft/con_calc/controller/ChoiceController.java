@@ -43,7 +43,7 @@ public class ChoiceController {
         return "choice";
     }
 
-    @GetMapping
+    @GetMapping("/exist")
     public String choiceBD(
             @RequestParam("orderId") Long orderId,
             Model model

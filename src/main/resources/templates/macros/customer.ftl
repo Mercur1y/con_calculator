@@ -3,21 +3,21 @@
     <#macro customer isEditPage>
         <div class="col-sm-6">
             <div class="p-2">
-                <input type="text" name="last_name" <#if isEditPage>value="${customer.lastName}"</#if>
+                <input type="text" name="lastName" <#if isEditPage>value="${customer.lastName}"</#if>
                        class="form-control w-50"
                        placeholder="Фамилия"/>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="p-2">
-                <input type="text" name="first_name"
+                <input type="text" name="firstName"
                        class="form-control w-50" <#if isEditPage>value="${customer.firstName}"</#if>
                        placeholder="Имя" />
             </div>
         </div>
         <div class="col-sm-6">
             <div class="p-2">
-                <input type="text" name="second_name" <#if isEditPage>value="${customer.secondName}"</#if>
+                <input type="text" name="secondName" <#if isEditPage>value="${customer.secondName}"</#if>
                        class="form-control w-50"
                        placeholder="Отчество"/>
             </div>

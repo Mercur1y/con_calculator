@@ -13,10 +13,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class HoleCreationDto {
 
-    @NotBlank
     private Double width;
-    @NotBlank
     private Double height;
-    @NotBlank
     private Short count;
 }

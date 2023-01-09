@@ -30,21 +30,21 @@
             </div>
             <div class="col-sm-6">
                 <div class="p-2">
-                    <input type="text" name="first_name"
-                           class="form-control w-50" value="${user.first_name}"
+                    <input type="text" name="firstName"
+                           class="form-control w-50" value="${user.firstName}"
                            placeholder="Имя" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="p-2">
-                    <input type="text" name="second_name" value="${user.second_name}"
+                    <input type="text" name="secondName" value="${user.secondName}"
                            class="form-control w-50"
                            placeholder="Отчество"/>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="p-2">
-                    <input type="text" name="last_name" value="${user.last_name}"
+                    <input type="text" name="lastName" value="${user.lastName}"
                            class="form-control w-50"
                            placeholder="Фамилия"/>
                 </div>

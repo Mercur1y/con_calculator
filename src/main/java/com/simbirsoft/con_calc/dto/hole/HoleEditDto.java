@@ -14,10 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class HoleEditDto {
 
     private Long id;
-    @NotBlank
     private Double width;
-    @NotBlank
     private Double height;
-    @NotBlank
     private Short count;
 }

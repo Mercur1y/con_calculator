@@ -14,20 +14,12 @@ import javax.validation.constraints.NotBlank;
 public class FloorCreationDto {
 
     private Integer number;
-    @NotBlank
     private Double outPerimeter;
-    @NotBlank
     private Double inPerimeter;
-    @NotBlank
     private Double height;
-    @NotBlank
     private Double square;
-    @NotBlank
     private Integer overWidth;
-    @NotBlank
     private Integer outWallWidth;
-    @NotBlank
     private Integer inWallWidth;
-    @NotBlank
     private Boolean isFirst;
 }

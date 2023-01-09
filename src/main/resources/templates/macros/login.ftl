@@ -27,22 +27,22 @@
             </div>
             <div class="col-sm-6">
                 <div class="p-2">
-                    <input type="text" name="first_name"
-                           class="form-control w-50 ${(first_nameError??)?string('is-invalid', '')}"
+                    <input type="text" name="firstName"
+                           class="form-control w-50 ${(firstNameError??)?string('is-invalid', '')}"
                            placeholder="Имя" />
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="p-2">
-                    <input type="text" name="second_name"
-                           class="form-control w-50 ${(second_nameError??)?string('is-invalid', '')}"
+                    <input type="text" name="secondName"
+                           class="form-control w-50 ${(secondNameError??)?string('is-invalid', '')}"
                            placeholder="Отчество"/>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="p-2">
-                    <input type="text" name="last_name"
-                           class="form-control w-50 ${(last_nameError??)?string('is-invalid', '')}"
+                    <input type="text" name="lastName"
+                           class="form-control w-50 ${(lastNameError??)?string('is-invalid', '')}"
                            placeholder="Фамилия"/>
                 </div>
             </div>

@@ -6,21 +6,21 @@
     <div align="center">
         <div class="col-sm-6">
             <div class="p-2">
-                <input type="text" name="last_name" value="${customer.lastName}"
+                <input type="text" name="lastName" value="${customer.lastName}"
                        class="form-control w-50"
                        placeholder="Фамилия"/>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="p-2">
-                <input type="text" name="first_name"
+                <input type="text" name="firstName"
                        class="form-control w-50" value="${customer.firstName}"
                        placeholder="Имя" />
             </div>
         </div>
         <div class="col-sm-6">
             <div class="p-2">
-                <input type="text" name="second_name" value="${customer.secondName}"
+                <input type="text" name="secondName" value="${customer.secondName}"
                        class="form-control w-50"
                        placeholder="Отчество"/>
             </div>
