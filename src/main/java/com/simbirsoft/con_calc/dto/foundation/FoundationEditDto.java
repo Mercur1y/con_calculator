@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode
 @Data
@@ -14,9 +15,9 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class FoundationEditDto {
 
-    @NotBlank
+    @NotNull
     private Double outPerimeter;
-    @NotBlank
+    @NotNull
     private Double inPerimeter;
 
     private FoundationResultsEditDto foundationResults;

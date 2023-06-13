@@ -23,11 +23,17 @@ public class Order extends AbstractElement {
     @Column
     private String adress;
 
+    @Column
+    public String status;
+
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Floor> floors;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval=true)
-    private Set<Foundation> foundations;
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Foundation foundation;
+
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Roof roof;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;

@@ -27,4 +27,7 @@ public class WallCladding extends AbstractElement {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Foundation foundation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Roof roof;
 }

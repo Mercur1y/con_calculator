@@ -11,4 +11,5 @@ import java.util.Set;
 @Repository
 public interface HoleRepo extends JpaRepository<Hole, Long> {
     Set<Hole> findAllByIdIn(Set<Long> ids);
+    Set<Hole> findAllByFloorId(Long id);
 }

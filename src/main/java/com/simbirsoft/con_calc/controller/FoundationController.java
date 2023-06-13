@@ -5,18 +5,15 @@ import com.simbirsoft.con_calc.dto.foundation.FoundationEditDto;
 import com.simbirsoft.con_calc.dto.wallCladding.ValidDtoForFoundation;
 import com.simbirsoft.con_calc.entity.Foundation;
 import com.simbirsoft.con_calc.entity.Order;
-import com.simbirsoft.con_calc.services.FoundationService;
-import com.simbirsoft.con_calc.services.MaterialService;
-import com.simbirsoft.con_calc.services.OrderService;
-import com.simbirsoft.con_calc.services.WallCladdingService;
+import com.simbirsoft.con_calc.entity.User;
+import com.simbirsoft.con_calc.services.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,14 +24,17 @@ public class FoundationController {
     private final WallCladdingService wallCladdingService;
     private final FoundationService foundationService;
     private final OrderService orderService;
+    private final FoundationResultsService foundationResultsService;
 
     @GetMapping("/new")
     public String addFoundationPage(
+            @AuthenticationPrincipal User user,
             @RequestParam(defaultValue = "") Long customerId,
             @RequestParam(defaultValue = "") Long orderId,
             Model model
     ) {
 
+        model.addAttribute("user", user);
         model.addAttribute("piles", materialService.getPilesMaterials());
         model.addAttribute("concrete", materialService.getConcreteMaterials());
         model.addAttribute("customerId", customerId);
@@ -48,16 +48,8 @@ public class FoundationController {
             @RequestParam(defaultValue = "") Long orderId,
             @RequestParam(defaultValue = "") String adress,
             @ModelAttribute("wc") @Valid ValidDtoForFoundation wc,
-            @Valid FoundationCreationDto foundation,
-            BindingResult bindingResult,
-            Model model
+            @Valid FoundationCreationDto foundation
     ) {
-
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = UtilsController.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-            return "newFoundation";
-        }
 
         Order order = orderService.addGetOrder(orderId, customerId, adress);
 
@@ -69,14 +61,23 @@ public class FoundationController {
                         wc.getNameOfConcrete(),
                         foundationEntity.getId());
 
-        return "redirect:/calculate/foundation/" + foundationEntity.getId();
+        foundationResultsService.addUpdateResults(foundationEntity);
+
+        return "redirect:/results?orderId=" + order.getId() + "&customerId=" + customerId;
     }
 
     @GetMapping
     public String editFoundationPage(
+            @AuthenticationPrincipal User user,
             @RequestParam(defaultValue = "") Long foundationId,
+            @RequestParam(defaultValue = "") Long customerId,
+            @RequestParam(defaultValue = "") Long orderId,
             Model model
     ) {
+
+        model.addAttribute("user", user);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("orderId", orderId);
 
         model.addAttribute("piles", materialService.getPilesMaterials());
         model.addAttribute("concrete", materialService.getConcreteMaterials());
@@ -94,25 +95,22 @@ public class FoundationController {
     @PostMapping
     public String edit(
             @RequestParam(defaultValue = "") Long foundationId,
+            @RequestParam(defaultValue = "") Long customerId,
+            @RequestParam(defaultValue = "") Long orderId,
             @ModelAttribute("wc") @Valid ValidDtoForFoundation wc,
-            @Valid FoundationEditDto foundation,
-            BindingResult bindingResult,
-            Model model
+            @Valid FoundationEditDto foundation
     ) {
 
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = UtilsController.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-            return "editFoundation";
-        }
-
-        foundationService.updateFoundation(foundation, foundationId);
+                foundationService.updateFoundation(foundation, foundationId);
         wallCladdingService
                 .addFoundationMaterials(
                         wc.getNameOfPiles(),
                         wc.getNameOfConcrete(),
                         foundationId);
 
-        return "redirect:/calculate/foundation/" + foundationId;
+        Foundation foundationEntity = foundationService.findFoundationById(foundationId);
+        foundationResultsService.addUpdateResults(foundationEntity);
+
+        return "redirect:/results?orderId=" + orderId + "&customerId=" + customerId;
     }
 }

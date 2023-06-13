@@ -4,6 +4,7 @@ import com.simbirsoft.con_calc.dto.user.UserCreationDto;
 import com.simbirsoft.con_calc.dto.user.UserEditDto;
 import com.simbirsoft.con_calc.entity.User;
 import com.simbirsoft.con_calc.services.UserService;
+import com.simbirsoft.con_calc.services.UtilsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -54,14 +55,6 @@ public class UserController {
             @Valid UserCreationDto userForm,
             BindingResult bindingResult,
             Model model) {
-
-        if (bindingResult.hasErrors()) {
-                Map<String, String> errors = UtilsController.getErrors(bindingResult);
-                model.mergeAttributes(errors);
-            System.out.println(errors);
-            model.addAttribute("user", userForm);
-            return "newUser";
-            }
 
         if (!userService.add(userForm)){
             model.addAttribute("usernameError", "Пользователь с таким именем уже существует");

@@ -10,6 +10,8 @@ import java.util.stream.Stream;
 @Repository
 public interface MaterialRepo extends JpaRepository<Material, Long> {
     Set<Material> findAllByTypeId(Long id);
+    Material getByTypeIdAndWidth(Long id, Integer width);
+    Material getByTypeId(Long id);
     Material getByLengthAndWidthAndHeight(Integer length, Integer width, Integer height);
     Material getByName(String name);
     Material getByWidth (Integer width);

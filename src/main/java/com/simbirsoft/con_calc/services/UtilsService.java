@@ -1,4 +1,4 @@
-package com.simbirsoft.con_calc.controller;
+package com.simbirsoft.con_calc.services;
 
 import com.simbirsoft.con_calc.entity.Material;
 import com.simbirsoft.con_calc.entity.MaterialType;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class UtilsController {
+public class UtilsService {
 
     private final PasswordEncoder passwordEncoder;
 
@@ -99,6 +99,11 @@ public class UtilsController {
         materialType8.setId(8L);
         materialType8.setName("Арматура");
         em.merge(materialType8);
+
+        MaterialType materialType9 = new MaterialType();
+        materialType9.setId(9L);
+        materialType9.setName("Кровля");
+        em.merge(materialType9);
 
         Material material = new Material();
         material.setId(1L);
@@ -405,6 +410,20 @@ public class UtilsController {
         material.setType(materialType8);
         material.setWidth(14);
         material.setPrice((double) 69);
+        em.merge(material);
+
+        material = new Material();
+        material.setId(37L);
+        material.setName("Ондулин Смарт 760х1950");
+        material.setType(materialType9);
+        material.setPrice(448.74);
+        em.merge(material);
+
+        material = new Material();
+        material.setId(38L);
+        material.setName("Профнастил С20 1160х2000");
+        material.setType(materialType9);
+        material.setPrice((double) 350);
         em.merge(material);
     }
 }

@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode
 @Data
@@ -13,9 +14,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class FoundationCreationDto {
 
-    private Integer number;
-    @NotBlank
+    @NotNull
     private Double outPerimeter;
-    @NotBlank
+    @NotNull
     private Double inPerimeter;
 }

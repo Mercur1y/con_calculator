@@ -12,6 +12,4 @@ import lombok.NoArgsConstructor;
 public class FoundationChoiceDto {
 
     private Long id;
-
-    private Integer number;
 }

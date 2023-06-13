@@ -60,8 +60,9 @@ public class FloorService {
         floorRepo.save(floorEntity);
 
         Hole holeEntity = holeMapper.toCreationEntity(hole);
-        holeEntity.setFloor(floorEntity);
+        holeEntity.setFloor(floorEntity);   
         holeRepo.save(holeEntity);
+        System.out.println(floorEntity);
         return floorEntity;
     }
 

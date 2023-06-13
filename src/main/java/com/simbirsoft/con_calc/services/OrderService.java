@@ -35,9 +35,16 @@ public class OrderService {
             Customer customer = customerService.findCustomerById(customerId);
             order.setAdress(adress);
             order.setCustomer(customer);
+            order.setStatus("Создан");
             orderRepo.save(order);
         }
         else order = orderRepo.getById(orderId);
         return order;
+    }
+
+    public void updateStatus(Long orderId, String status) {
+        Order order = findOrderById(orderId);
+        order.setStatus(status);
+        orderRepo.save(order);
     }
 }

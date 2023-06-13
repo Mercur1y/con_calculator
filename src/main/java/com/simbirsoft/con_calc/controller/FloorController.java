@@ -6,18 +6,15 @@ import com.simbirsoft.con_calc.dto.hole.HoleCreationDto;
 import com.simbirsoft.con_calc.dto.wallCladding.ValidDtoForFloor;
 import com.simbirsoft.con_calc.entity.Floor;
 import com.simbirsoft.con_calc.entity.Order;
-import com.simbirsoft.con_calc.services.FloorService;
-import com.simbirsoft.con_calc.services.MaterialService;
-import com.simbirsoft.con_calc.services.OrderService;
-import com.simbirsoft.con_calc.services.WallCladdingService;
+import com.simbirsoft.con_calc.entity.User;
+import com.simbirsoft.con_calc.services.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,13 +25,16 @@ public class FloorController {
     private final MaterialService materialService;
     private final WallCladdingService wallCladdingService;
     private final OrderService orderService;
+    private final FloorResultsService floorResultsService;
 
     @GetMapping("/new")
     public String addFloorPage(
+            @AuthenticationPrincipal User user,
             @RequestParam(defaultValue = "") Long customerId,
             @RequestParam(defaultValue = "") Long orderId,
             Model model
     ) {
+        model.addAttribute("user", user);
         model.addAttribute("osb", materialService.getOsbMaterials());
         model.addAttribute("water", materialService.getWaterProofMaterials());
         model.addAttribute("wind", materialService.getWindProofMaterials());
@@ -52,16 +52,8 @@ public class FloorController {
             @RequestParam(defaultValue = "") String adress,
             @ModelAttribute("wc") @Valid ValidDtoForFloor wc,
             @ModelAttribute("floor") @Valid FloorCreationDto floor,
-            @ModelAttribute("hole") @Valid HoleCreationDto hole,
-            BindingResult bindingResult,
-            Model model
+            @ModelAttribute("hole") @Valid HoleCreationDto hole
     ) {
-
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = UtilsController.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-            return "newFloor";
-        }
 
         Order order = orderService.addGetOrder(orderId, customerId, adress);
 
@@ -86,11 +78,16 @@ public class FloorController {
                         floorEntity.getId()
                 );
 
-        return "redirect:/calculate/" + floorEntity.getId();
+        floorResultsService.addUpdateResults(floorEntity);
+
+        return "redirect:/results?orderId=" + floorEntity.getOrder().getId() + "&customerId=" + customerId;
     }
 
     @GetMapping
     public String editFloor(
+            @AuthenticationPrincipal User user,
+            @RequestParam(defaultValue = "") Long customerId,
+            @RequestParam(defaultValue = "") Long orderId,
             @RequestParam(defaultValue = "") Long floorId,
             Model model
     ) {
@@ -100,9 +97,14 @@ public class FloorController {
         model.addAttribute("warm", materialService.getWarmProofMaterials());
         model.addAttribute("floorId", floorId);
 
+        model.addAttribute("user", user);
+        model.addAttribute("customerId", customerId);
+        model.addAttribute("orderId", orderId);
+
         FloorEditDto floor = floorService.getForEdit(floorId);
 
         model.addAttribute("floor", floor);
+        model.addAttribute("floorId", floorId);
         model.addAttribute("results", floor.getFloorResults());
 
         return "editFloor";
@@ -111,17 +113,11 @@ public class FloorController {
     @PostMapping
     public String edit(
             @RequestParam(defaultValue = "") Long floorId,
+            @RequestParam(defaultValue = "") Long customerId,
+            @RequestParam(defaultValue = "") Long orderId,
             @ModelAttribute("wc") @Valid ValidDtoForFloor wc,
-            @ModelAttribute("floor") @Valid FloorEditDto floor,
-            BindingResult bindingResult,
-            Model model
+            @ModelAttribute("floor") @Valid FloorEditDto floor
     ) {
-
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = UtilsController.getErrors(bindingResult);
-            model.mergeAttributes(errors);
-            return "editFloor";
-        }
 
         floorService.updateFloor(floor, floorId);
 
@@ -143,6 +139,10 @@ public class FloorController {
                         wc.getNameOfOverWarm(),
                         floorId
                 );
-        return "redirect:/calculate/" + floorId;
+
+        Floor floorEntity = floorService.findFloorById(floorId);
+        floorResultsService.addUpdateResults(floorEntity);
+
+        return "redirect:/results?orderId=" + orderId + "&customerId=" + customerId;
     }
 }

@@ -1,11 +1,13 @@
 package com.simbirsoft.con_calc.dto.floor;
 
+import com.simbirsoft.con_calc.dto.hole.HoleEditDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @EqualsAndHashCode
 @Data
@@ -22,4 +24,5 @@ public class FloorCreationDto {
     private Integer outWallWidth;
     private Integer inWallWidth;
     private Boolean isFirst;
+    private Set<HoleEditDto> holes;
 }

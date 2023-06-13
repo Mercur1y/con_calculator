@@ -16,4 +16,6 @@ public class OrderListDto {
     private String adress;
 
     private String localDateTime;
+
+    private String status;
 }

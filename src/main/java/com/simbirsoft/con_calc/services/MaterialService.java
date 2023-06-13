@@ -15,7 +15,6 @@ import java.util.Set;
 public class MaterialService {
 
     private final MaterialRepo materialRepo;
-    private final MaterialTypeRepo materialTypeRepo;
 
     public Set<Material> getWoodMaterials() {
         return materialRepo.findAllByTypeId(1L);
@@ -47,6 +46,22 @@ public class MaterialService {
 
     public Set<Material> getArmMaterials() {
         return materialRepo.findAllByTypeId(8L);
+    }
+
+    public Set<Material> getTopMaterials() {return materialRepo.findAllByTypeId(9L); }
+
+    public Material getByTypeId (Set <Material> materials, Long id) {
+        return  materials.stream()
+                .filter(material -> material.getType().getId().equals(id))
+                .findFirst()
+                .get();
+    }
+
+    public Material getByTypeIdAndWidth (Set <Material> materials, Long id, Integer width) {
+        return  materials.stream()
+                .filter(material -> material.getType().getId().equals(id) && material.getWidth().equals(width))
+                .findFirst()
+                .get();
     }
 
     public String getNameByTypeId (Set <Material> materials, Long id) {

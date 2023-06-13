@@ -1,0 +1,118 @@
+body {
+    background: rgb(195,205,219);
+    background: linear-gradient(90deg, rgba(195,205,219,1) 0%, rgba(179,198,207,1) 100%);
+    font-family: "Montserrat", "Arial", sans-serif !important;
+}
+
+
+#nav-key {
+    font-size: 25px;
+    background: -webkit-linear-gradient(#ff4800, #e24400);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dropdown-menu {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15)!important;
+    margin-top: 0px !important;
+    width: 20% !important;
+}
+
+#cards {
+    align-items: center;
+    bottom: 0;
+    justify-content: center;
+}
+
+ul {
+    list-style-type: none;
+}
+li.is-visible {
+    display: block;
+    opacity: 1;
+    animation: fadeInFromNone 400ms ease-in-out;
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+#primary-orange {
+    border-color: #e24400;
+    background-color: #ff4800;
+}
+
+#outline-grey {
+    border-color: #2f2f2f;
+}
+#outline-grey:hover {
+    background-color: #2f2f2f
+}
+.pagination-container {
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    justify-content: center;
+}
+.pagination-number,
+.pagination-button{
+    font-size: 1.1rem;
+    background-color: transparent;
+    border: none;
+    margin: 0.25rem 0.25rem;
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: .2rem;
+}
+.pagination-number:hover,
+.pagination-button:not(.disabled):hover {
+    background: #fff;
+}
+.pagination-number.active {
+    color: #fff;
+    background: #2f2f2f;
+}
+
+#searchgrid {
+    width: 150%;
+}
+
+.tbIcon {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.tbIcon:hover {
+    background-color: #A2A4A4;
+    border-color: transparent;
+}
+
+#navbarDropdownMenuLink {
+    color: dimgray;
+}
+
+#navbarDropdownMenuLink:hover {
+    color: #A2A4A4;
+}
+
+.form-control-sm {
+    max-width: 90%;
+}
+
+.form-select-sm {
+    max-width: 90%;
+}

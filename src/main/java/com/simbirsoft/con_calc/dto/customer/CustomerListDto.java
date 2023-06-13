@@ -18,4 +18,10 @@ public class CustomerListDto {
     private String firstName;
 
     private String secondName;
+
+    private String phone;
+
+    private String email;
+
+    private String adress;
 }

@@ -1,5 +1,6 @@
 package com.simbirsoft.con_calc.services;
 
+import com.simbirsoft.con_calc.dto.customer.CustomerListDto;
 import com.simbirsoft.con_calc.dto.order.OrderListDto;
 import com.simbirsoft.con_calc.dto.customer.CustomerCreationDto;
 import com.simbirsoft.con_calc.dto.customer.CustomerEditDto;
@@ -28,6 +29,10 @@ public class CustomerService {
         return customerFromDb.orElse(new Customer());
     }
 
+    public CustomerListDto getCustomerDto(Long customerId) {
+        return customerMapper.toListDto(findCustomerById(customerId));
+    }
+
     public CustomerEditDto getForEdit(Long id) {
         return customerMapper.toEditDto(findCustomerById(id));
     }
@@ -54,5 +59,9 @@ public class CustomerService {
         customerFromDb.setAdress(customer.getAdress());
         customerFromDb.setUser(customerFromDb.getUser());
         customerRepo.save(customerFromDb);
+    }
+
+    public void deleteCustomer(Long customerId) {
+        customerRepo.deleteById(customerId);
     }
 }

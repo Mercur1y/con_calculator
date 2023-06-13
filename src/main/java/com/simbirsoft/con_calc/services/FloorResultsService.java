@@ -31,7 +31,10 @@ public class FloorResultsService {
 
         FloorResults floorResults;
 
-        if(floor.getFloorResults() == null) floorResults = new FloorResults();
+        if(floor.getFloorResults() == null) {
+            floorResults = new FloorResults();
+            floorResults.setFloor(floor);
+        }
         else {
             floorResults = floorResultsRepo.getById(floor.getFloorResults().getId());
         }
@@ -133,8 +136,6 @@ public class FloorResultsService {
                 + floorResults.getTotalInPrice()
                 + floorResults.getTotalOverPrice()
         );
-
-        floorResults.setFloor(floor);
         floorResultsRepo.save(floorResults);
     }
 }

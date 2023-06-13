@@ -6,7 +6,8 @@ public enum WallCladdingTypeEnum {
     IN ("Внутренняя обшивка"),
     OUT ("Внешняя обшивка"),
     OVERLAP ("Обшивка перекрытий"),
-    GROUND ("Обшивка фундамента");
+    GROUND ("Обшивка фундамента"),
+    TOP ("Обшивка крыши");
 
     private WallCladdingTypeEnum (final String comment) {this.comment = comment;}
 

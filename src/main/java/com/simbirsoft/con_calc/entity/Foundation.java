@@ -15,9 +15,6 @@ import java.util.Set;
 public class Foundation extends AbstractElement {
 
     @Column
-    private Integer number;
-
-    @Column
     private Double outPerimeter;
 
     @Column
@@ -29,7 +26,7 @@ public class Foundation extends AbstractElement {
     @OneToOne(mappedBy = "foundation", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private FoundationResults foundationResults;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 }

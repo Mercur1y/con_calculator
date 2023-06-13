@@ -2,12 +2,10 @@ package com.simbirsoft.con_calc.services;
 
 import com.simbirsoft.con_calc.entity.Floor;
 import com.simbirsoft.con_calc.entity.Foundation;
+import com.simbirsoft.con_calc.entity.Roof;
 import com.simbirsoft.con_calc.entity.WallCladding;
 import com.simbirsoft.con_calc.entity.enums.WallCladdingTypeEnum;
-import com.simbirsoft.con_calc.view.FloorRepo;
-import com.simbirsoft.con_calc.view.FoundationRepo;
-import com.simbirsoft.con_calc.view.MaterialRepo;
-import com.simbirsoft.con_calc.view.WallCladdingRepo;
+import com.simbirsoft.con_calc.view.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +20,7 @@ public class WallCladdingService {
     private final WallCladdingRepo wallCladdingRepo;
     private final FloorRepo floorRepo;
     private final FoundationRepo foundationRepo;
+    private final RoofRepo roofRepo;
     private final MaterialRepo materialRepo;
 
     public WallCladding findWallCladdingById(Long id) {
@@ -40,7 +39,14 @@ public class WallCladdingService {
         if (foundation.getWallCladdings() == null) return false;
         else return foundation.getWallCladdings()
                 .stream()
-                .anyMatch(c -> c.getType().equals(WallCladdingTypeEnum.OVERLAP));
+                .anyMatch(c -> c.getType().equals(WallCladdingTypeEnum.GROUND));
+    }
+
+    private boolean existsRoof(Roof roof) {
+        if (roof.getWallCladdings() == null) return false;
+        else return roof.getWallCladdings()
+                .stream()
+                .anyMatch(c -> c.getType().equals(WallCladdingTypeEnum.TOP));
     }
 
     private Long getIdFloorByType(Floor floor, WallCladdingTypeEnum type) {
@@ -55,7 +61,16 @@ public class WallCladdingService {
     private Long getFoundationId(Foundation foundation) {
         return foundation.getWallCladdings()
                 .stream()
-                .filter(c -> c.getType().equals(WallCladdingTypeEnum.OVERLAP))
+                .filter(c -> c.getType().equals(WallCladdingTypeEnum.GROUND))
+                .map(WallCladding::getId)
+                .findFirst()
+                .get();
+    }
+
+    private Long getRoofId(Roof roof) {
+        return roof.getWallCladdings()
+                .stream()
+                .filter(c -> c.getType().equals(WallCladdingTypeEnum.TOP))
                 .map(WallCladding::getId)
                 .findFirst()
                 .get();
@@ -162,7 +177,7 @@ public class WallCladdingService {
 
         if(!exists) {
             foundMaterials = new WallCladding();
-            foundMaterials.setType(WallCladdingTypeEnum.OVERLAP);
+            foundMaterials.setType(WallCladdingTypeEnum.GROUND);
         } else {
             long id = getFoundationId(foundation);
             foundMaterials = findWallCladdingById(id);
@@ -181,5 +196,38 @@ public class WallCladdingService {
                         .collect(Collectors.toSet()));
         foundMaterials.setFoundation(foundation);
         wallCladdingRepo.save(foundMaterials);
+    }
+
+    public void addRoofWallCladding(String waterName,
+                                   String warmName,
+                                   String topName,
+                                   Long roofId
+    ) {
+        WallCladding wallCladding;
+
+        Roof roof = roofRepo.getById(roofId);
+        boolean exists = existsRoof(roof);
+
+        if (!exists) {
+            wallCladding = new WallCladding();
+            wallCladding.setType(WallCladdingTypeEnum.TOP);
+        }
+        else {
+            long id = getRoofId(roof);
+            wallCladding = wallCladdingRepo.getById(id);
+        }
+
+        wallCladding
+                .setMaterials(Stream.of(
+                        materialRepo.getByLengthAndWidthAndHeight(
+                                6000, 100, 50),
+                        materialRepo.getByLengthAndWidthAndHeight(
+                                6000, 200, 50),
+                        materialRepo.getByName(waterName),
+                        materialRepo.getByName(topName),
+                        materialRepo.getByName(warmName))
+                        .collect(Collectors.toSet()));
+        wallCladding.setRoof(roof);
+        wallCladdingRepo.save(wallCladding);
     }
 }

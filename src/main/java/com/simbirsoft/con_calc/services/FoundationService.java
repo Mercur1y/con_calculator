@@ -29,21 +29,6 @@ public class FoundationService {
 
     public Foundation addFoundation (Order order, FoundationCreationDto foundation) {
 
-        if(order.getFoundations() == null || order.getFoundations().isEmpty()) {
-            foundation.setNumber(1);
-        }
-        else {
-            foundation.setNumber(
-                    (order
-                            .getFoundations()
-                            .stream()
-                            .map(Foundation::getNumber)
-                            .sorted()
-                            .reduce((a, b) -> b)
-                            .get()) + 1
-            );
-        }
-
         Foundation foundationEntity = foundationMapper.toCreationEntity(foundation);
 
         foundationEntity.setOrder(order);
